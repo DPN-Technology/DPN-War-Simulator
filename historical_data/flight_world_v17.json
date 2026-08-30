@@ -1,0 +1,21 @@
+{
+  "version": "1.7",
+  "feature": "first_person_carrier_flight_and_animated_ship_world",
+  "historical_lock": true,
+  "sourced_inherited_content": [
+    "USS Enterprise (CV-6) Midway identity and existing sourced order-of-battle layer",
+    "VF-6 / VB-6 / VS-6 / VT-6 squadron and aircraft-family associations inherited from v1.5 source register"
+  ],
+  "training_abstractions": [
+    "cockpit geometry and instrument presentation",
+    "fixed-wing performance coefficients",
+    "takeoff acceleration and launch envelope",
+    "carrier recovery envelope",
+    "fuel-burn coefficients",
+    "procedural sailor gait animation",
+    "expanded compartment-door coordinates",
+    "electrical arc and steam visual effects",
+    "emergency-light rendering"
+  ],
+  "policy": "Do not present training coefficients or procedural geometry as archival CV-6/F4F/SBD/TBD measurements."
+}

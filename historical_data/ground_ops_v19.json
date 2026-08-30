@@ -1,0 +1,24 @@
+{
+  "version": "1.9.0",
+  "system": "Expeditionary Ground, Airbase and Amphibious Operations",
+  "historical_lock": true,
+  "historical_scenario_unchanged": "Battle of Midway 1942",
+  "source_policy": "Ground-force names, exact manpower, vehicle coefficients, airfield coordinates/stocks, amphibious craft behavior, mission geometry, combat/logistics rates and training-island geography are simulation abstractions unless separately sourced in a future historical scenario manifest.",
+  "training_abstractions": [
+    "Home Expeditionary Airfield and Forward Airfield Able geometry",
+    "Training Island Alpha landing area",
+    "1st Training Rifle Company and supporting unit names/manpower",
+    "Ground vehicle performance and fuel rates",
+    "Ground supply quantities and movement rates",
+    "Amphibious landing craft performance and embarked strength",
+    "Ground mission timing, air-support points and scoring",
+    "Motor-pool vehicle handling model"
+  ],
+  "integration": [
+    "Persistent campaign clock",
+    "Finite campaign base stores",
+    "Carrier Air Group support",
+    "Career XP/statistics",
+    "Seamless first-person shore training base"
+  ]
+}

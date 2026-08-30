@@ -1,0 +1,82 @@
+{
+  "version": "2.7.0",
+  "target": "USS Enterprise (CV-6), late May / early June 1942, Battle of Midway configuration",
+  "policy": "Source-constrained exterior/class geometry is separated from reconstruction-only hidden arrangements. No reconstruction-only detail is asserted as an exact archival CV-6 fact.",
+  "primary_reference_set": [
+    {
+      "catalog": "NHHC 19-N-29691",
+      "type": "March 1942 official Navy photograph",
+      "supports": ["forward/island massing", "radar/mast cues", "1.1-inch AA near island"],
+      "url": "https://www.history.navy.mil/content/history/nhhc/our-collections/photography/numerical-list-of-images/nhhc-series/nh-series/19-N-29000/19-N-29691.html"
+    },
+    {
+      "catalog": "NHHC 19-N-29697",
+      "type": "March 1942 official Navy photograph",
+      "supports": ["aft-island massing", "aircraft crane", "Mk.33 director", "searchlight/loudspeaker cues", "1.1-inch AA"],
+      "url": "https://www.history.navy.mil/our-collections/photography/numerical-list-of-images/nhhc-series/nh-series/19-N-29000/19-N-29697.html"
+    },
+    {
+      "catalog": "NHHC 80-G-32225",
+      "type": "4 June 1942 Enterprise-at-sea photograph",
+      "supports": ["Midway-era silhouette", "island/hull/deck relationships"],
+      "url": "https://www.history.navy.mil/content/history/nhhc/our-collections/photography/wars-and-events/world-war-ii/midway/80-G-32225.html"
+    },
+    {
+      "catalog": "NHHC DANFS Enterprise CV-6",
+      "type": "official ship history",
+      "supports": ["March 1942 alterations", "30 20mm gun fit before Midway", "post-Midway replacement of 1.1-inch batteries is excluded from this period lock"],
+      "url": "https://www.history.navy.mil/research/histories/ship-histories/danfs/e/enterprise-cv-6-vii.html"
+    },
+    {
+      "catalog": "CV-5 USS Yorktown Booklet of General Plans, 1940",
+      "type": "Yorktown-class plan reference",
+      "supports": ["class deck relationships", "open hangar envelope", "three elevators", "major class arrangement"],
+      "url": "https://www.maritime.org/doc/plans/index.php"
+    }
+  ],
+  "source_constrained": {
+    "overall_length_m": 251.4,
+    "flight_deck_length_m": 244.6,
+    "flight_deck_width_m": 29.9,
+    "waterline_beam_m": 25.4,
+    "three_elevators": true,
+    "midway_period_20mm_target": 30,
+    "midway_period_quad_1p1_target": 4,
+    "single_5in38_target": 8
+  },
+  "photo_constrained_features": [
+    "island/pilot-house visual massing",
+    "large rectangular/tapered funnel cue",
+    "tripod mast and CXAM-style radar mattress",
+    "aft aircraft crane",
+    "Mk.33 director cue",
+    "searchlights and loudspeaker cues",
+    "1.1-inch mount presence before post-Midway 40mm refit",
+    "open-sided hangar framing"
+  ],
+  "class_plan_constrained_features": [
+    "Yorktown-class long open hangar envelope",
+    "three elevator relationship",
+    "major deck level relationships",
+    "carrier-scale hull/deck proportions"
+  ],
+  "reconstruction_only": [
+    "exact Enterprise-specific hidden compartment partitions",
+    "exact machinery-room equipment locations",
+    "exact CIC and bridge console locations",
+    "exact hull frame offsets and plate seam spacing",
+    "exact AA gun coordinates and local platform dimensions",
+    "exact door, porthole, ladder, locker, hose-reel and capstan coordinates",
+    "exact boot-topping / antifouling paint boundary and RGB values",
+    "exact deck weathering and PBR roughness values",
+    "exact deck-aircraft parking arrangement",
+    "exact interior lighting fixture placement"
+  ],
+  "not_claimed_exact": [
+    "complete June 1942 CV-6 deck-plan reproduction",
+    "complete engineering piping schematic",
+    "complete electrical cable routing",
+    "exact camouflage color values from black-and-white photographs",
+    "exact crew watch-station furniture arrangement"
+  ]
+}

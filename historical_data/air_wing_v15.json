@@ -1,0 +1,23 @@
+{
+  "feature": "Persistent Carrier Air Wing",
+  "version": "1.5.0",
+  "historical_lock": true,
+  "verified_labels": {
+    "VF-6": "F4F Wildcat",
+    "VB-6": "SBD Dauntless",
+    "VS-6": "SBD Dauntless",
+    "VT-6": "TBD Devastator"
+  },
+  "source_policy": "Squadron labels and aircraft families are supported by NHHC Enterprise/Midway material.",
+  "training_abstractions": [
+    "individual aircrew names",
+    "exact roster quantities",
+    "training bureau numbers",
+    "aircraft condition values",
+    "mission ranges and timing",
+    "fuel/ordnance inventory quantities",
+    "service rates",
+    "mission outcomes"
+  ],
+  "geometry_policy": "ADVANCED_TRAINING_SCHEMATIC_NOT_EXACT_1942_CV6_RECONSTRUCTION"
+}

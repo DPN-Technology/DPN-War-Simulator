@@ -1,0 +1,23 @@
+{
+  "version": "1.8",
+  "system": "first_person_air_combat_navigation_survival",
+  "historical_lock": true,
+  "historical_source_inheritance": [
+    "midway_1942_manifest.json",
+    "enterprise_cv6_midway_station_duty.json",
+    "air_wing_v15.json",
+    "flight_world_v17.json"
+  ],
+  "training_abstractions": [
+    "cockpit training contact identities and geometry",
+    "gun ammunition quantity and firing envelope",
+    "bomb and torpedo release envelopes",
+    "aircraft damage coefficients",
+    "pilot health model",
+    "bailout and ditching thresholds",
+    "search-and-rescue timing",
+    "mission navigation waypoint placement",
+    "radio bearing/range assistance"
+  ],
+  "policy": "These mechanics exercise reusable air-combat and pilot-survival systems and do not rewrite the locked Battle of Midway historical timeline."
+}

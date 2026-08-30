@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "feature_id": "task_force_open_ocean_v13",
+  "version": "1.3.0",
+  "historical_roster_source": "midway_1942_manifest.json -> order_of_battle -> U.S. Task Force 16",
+  "historical_lock": true,
+  "friendly_runtime_units": [
+    "USS Hornet (CV-8)",
+    "USS Northampton",
+    "USS Vincennes",
+    "USS Pensacola",
+    "USS Minneapolis",
+    "USS New Orleans",
+    "USS Atlanta",
+    "USS Worden",
+    "USS Monaghan",
+    "USS Phelps",
+    "USS Maury"
+  ],
+  "training_abstractions": [
+    "formation geometry and spacing",
+    "AI captain identities",
+    "sensor ranges and detection confidence curves",
+    "fuel and ammunition quantities",
+    "replenishment rates",
+    "surface-fire and ASW effectiveness",
+    "escort damage coefficients",
+    "simulated hostile cruiser/destroyer/submarine training contacts"
+  ],
+  "training_problem_policy": "SIMULATED_NON_HISTORICAL_FLEET_CONTACTS",
+  "formations": ["CARRIER SCREEN", "COLUMN", "DISPERSED", "ASW SCREEN"],
+  "physical_stations": [
+    "Task Force Tactical Plot",
+    "Signal Bridge / Fleet Communications",
+    "Fleet Logistics & Replenishment Board"
+  ],
+  "persistence": true
+}

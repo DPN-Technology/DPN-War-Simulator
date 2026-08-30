@@ -1,0 +1,50 @@
+WAR SIMULATOR v2.7 — START HERE
+
+PRIMARY CURRENT PLAYABLE CLIENT:
+  TEST_AND_RUN.bat
+
+NORMAL NO-CONSOLE FALLBACK LAUNCH:
+  START_WAR_SIMULATOR.vbs
+
+CURRENT PYINSTALLER WINDOWS EXE BUILDER:
+  BUILD_AND_RUN_WINDOWS_EXE.bat
+
+v2.7 CV-6 MIDWAY 1942 ASSETS:
+  assets3d\Enterprise_CV6_1942_Midway.glb
+  assets3d\Enterprise_CV6_1942_Midway_EDITABLE.glb
+  assets3d\modules\
+  assets3d\interiors\
+  assets3d\textures\
+
+UNREAL ENGINE 5 MIGRATION (UE5 MUST BE INSTALLED ON YOUR WINDOWS PC):
+  IMPORT_ENTERPRISE_UE5.bat
+  OPEN_UE5_PROJECT.bat
+  BUILD_UE5_WINDOWS.bat
+
+VISUAL TARGET:
+  USS Enterprise (CV-6), late May / early June 1942, Battle of Midway period.
+
+IMPORTANT ACCURACY BOUNDARY:
+  Exterior scale and many visible island/weapon/radar/crane features are constrained by period imagery and Yorktown-class references.
+  Hidden compartment partitions, exact machinery arrangements, exact gun coordinates, exact paint RGB values and many human-scale fittings remain reconstruction until Enterprise-specific archival drawings are traced.
+
+v2.7 ADDS:
+- ~1,500 named editable exterior components / ~43,000 triangles.
+- More detailed hull/deck/hangar/island fittings at human scale.
+- Streamable Hull/Deck/Hangar, Island, Weapons/Fittings and Deck-Aircraft GLBs.
+- Streamable Hangar, Bridge, CIC and Engineering interior reconstruction GLBs.
+- More detailed bridge/CIC/engineering/hangar equipment.
+- Modular Unreal Enterprise actor.
+- Unreal watertight-door and compartment-volume simulation hooks.
+- UE Nanite/Lumen/VSM/TSR target settings.
+
+INPUT GUARANTEE:
+  D = move right on foot.
+  D = steer right in vehicles.
+  F6 = Damage Control.
+
+READ:
+  ENTERPRISE_RECONSTRUCTION_V27.md
+  UE5_SHIP_PIPELINE_V27.md
+  PLAYTEST_GUIDE.md
+  TEST_RESULTS.txt

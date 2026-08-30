@@ -1,0 +1,20 @@
+{
+  "version": "1.1.0",
+  "system": "structural_damage_and_survivability",
+  "historical_lock": true,
+  "geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_1942_COMPARTMENT_PLAN",
+  "damage_coefficients_policy": "TRAINING_CALIBRATION_NOT_ARCHIVAL_CV6_DAMAGE_TRIAL_DATA",
+  "combat_inject_policy": "SIMULATED_NON_HISTORICAL_TRAINING_CASUALTIES",
+  "features": [
+    "localized_structural_zones",
+    "penetration_and_blast_training_model",
+    "fire_smoke_heat_oxygen",
+    "progressive_flooding",
+    "watertight_boundaries",
+    "list_trim_buoyancy_stability",
+    "casualties_and_medical",
+    "magazine_risk",
+    "operational_degradation",
+    "sinking_and_abandon_ship"
+  ]
+}

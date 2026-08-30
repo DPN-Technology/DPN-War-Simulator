@@ -1,0 +1,69 @@
+WAR SIMULATOR v2.7 — FINAL VALIDATION
+USS ENTERPRISE CV-6 MIDWAY 1942 RECONSTRUCTION / MODULAR UNREAL SHIP PIPELINE
+
+PYTHON COMPILE
+PASS — warsim, tests, main.py, WarSimulator.pyw
+
+AUTOMATED TESTS
+388 / 388 PASS
+
+NEW v2.7 COVERAGE
+24 dedicated reconstruction tests covering:
+- exact release version
+- runtime/editable GLB presence and scale
+- 1,400+ editable component density
+- 40,000+ triangle density
+- runtime grouping budget
+- full carrier bounds
+- three elevators
+- CXAM/Mk.33/crane/searchlight/loudspeaker cues
+- Midway-period 8 x 5in/38, 4 x quad 1.1in, 30 x 20mm art target
+- human-scale deck fittings / safety net / hose reels
+- hull seam/scupper/hawse detail
+- island access detail
+- four exterior streaming modules
+- four interior streaming modules
+- PBR texture pack
+- UE import/Nanite/collision configuration
+- UE watertight-door and compartment-volume actors
+- modular Enterprise actor
+- source/reconstruction boundary manifest
+- permanent D-key movement regression
+- interior cutaway preview
+
+GUI REGRESSION
+GUI_SMOKE_V09_PASS
+GUI_SMOKE_V10_PASS
+GUI_SMOKE_V11_PASS
+GUI_SMOKE_V12_PASS
+GUI_SMOKE_V13_PASS
+GUI_SMOKE_V14_PASS
+GUI_SMOKE_V15_PASS
+GUI_SMOKE_V16_PASS
+GUI_SMOKE_V17_PASS
+GUI_SMOKE_V18_PASS
+GUI_SMOKE_V19_PASS
+GUI_SMOKE_V20_PASS
+GUI_SMOKE_V21_PASS
+GUI_SMOKE_V22_PASS
+GUI_SMOKE_V23_PASS
+GUI_SMOKE_V24_PASS
+GUI_SMOKE_V25_PASS
+GUI_SMOKE_V26_PASS
+GUI_SMOKE_V27_PASS
+
+ASSET GENERATION
+PASS — v2.7 generator rebuilt the runtime GLB, editable GLB, OBJ, four exterior modules, four interior modules and PBR maps.
+
+CURRENT MAIN ASSET STATISTICS
+Editable objects: 1,498
+Vertices: 24,629
+Triangles: 43,314
+Runtime groups: 55
+Overall X bound: >= 251 m
+
+UNREAL ENGINE LIMITATION
+Unreal Engine is not installed in the build environment. The UE5 C++ source/project/import pipeline is statically validated but no UE5 executable is claimed as compiled or runtime-tested here.
+
+INPUT REGRESSION
+PASS — on-foot D remains right strafe; Damage Control remains F6.

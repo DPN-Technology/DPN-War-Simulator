@@ -1,0 +1,13 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "",
+  "Category": "Games",
+  "Description": "War Simulator UE5 migration foundation - USS Enterprise CV-6 Midway 1942",
+  "Modules": [
+    {"Name": "WarSimulatorUE5", "Type": "Runtime", "LoadingPhase": "Default"}
+  ],
+  "Plugins": [
+    {"Name": "PythonScriptPlugin", "Enabled": true},
+    {"Name": "EditorScriptingUtilities", "Enabled": true}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "version": "2.5.0",
+  "purpose": "Enterprise scale and presentation boundary",
+  "source_supported": {
+    "uss_enterprise_overall_length_ft_in": "827 ft 4 in",
+    "yorktown_class_flight_deck_m": [244.6, 29.9],
+    "yorktown_class_hangar_m": [166.4, 19.2],
+    "aircraft_elevators": 3,
+    "sources": [
+      "https://www.history.navy.mil/research/histories/ship-histories/danfs/e/enterprise-cv-6-vii.html",
+      "https://www.navypedia.org/ships/usa/us_cv_yorktown.htm"
+    ]
+  },
+  "gameplay_normalization": {
+    "ship_coordinate_footprint_m": [245, 30],
+    "note": "World units aboard Enterprise are approximately meters; exact compartment geometry is not claimed archival reconstruction."
+  },
+  "explicit_training_or_procedural_geometry": [
+    "interior partition locations",
+    "equipment coordinates",
+    "island tier dimensions",
+    "hangar side opening spacing",
+    "sponson locations",
+    "arresting wire positions",
+    "propeller presentation",
+    "collision grid",
+    "render and LOD distances"
+  ]
+}

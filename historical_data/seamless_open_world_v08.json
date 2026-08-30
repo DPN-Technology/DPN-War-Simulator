@@ -1,0 +1,20 @@
+{
+  "version": "0.8.0",
+  "feature": "seamless_open_world_and_living_ship",
+  "geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_1942_DECK_PLAN",
+  "historical_lock": true,
+  "normal_scene_loading_between_rooms_or_decks": false,
+  "global_layers": [
+    {"key":"LOWER","floor_z":-3.2},
+    {"key":"ENGINEERING","floor_z":0.0},
+    {"key":"HANGAR","floor_z":3.2},
+    {"key":"FLIGHT","floor_z":6.4},
+    {"key":"ISLAND","floor_z":9.6},
+    {"key":"BRIDGE","floor_z":12.8}
+  ],
+  "shore_base_floor_z": 3.2,
+  "living_ship_policy": "SIMULATION_ROUTINE_NOT_ASSERTED_HISTORICAL_WATCHBILL",
+  "living_systems": ["hunger","hydration","fatigue","stress","wellness","meals","sleep","medical","maintenance","crew_routines"],
+  "maintenance_policy": "TRAINING_AND_ROUTINE_SIMULATION",
+  "operational_engine": "existing_enterprise_midway_historical_layer_reused"
+}

@@ -1,0 +1,60 @@
+{
+  "version": "2.6.0",
+  "target": "USS Enterprise (CV-6), late May / early June 1942, Midway configuration",
+  "source_driven": {
+    "overall_length_m": 251.4,
+    "flight_deck_length_m": 244.6,
+    "flight_deck_width_m": 29.9,
+    "waterline_beam_m": 25.4,
+    "draft_m": 7.9,
+    "elevators": 3,
+    "visible_period_features": [
+      "wooden flight deck",
+      "metal tie-down strips",
+      "flight-deck distance markings",
+      "large starboard island stack",
+      "CXAM-1 radar at masthead",
+      "aircraft crane and searchlights",
+      "1.1-inch quad AA mounts near island",
+      "20 mm Oerlikon installation present by March 1942",
+      "F4F Wildcat, SBD Dauntless and TBD Devastator aircraft types"
+    ]
+  },
+  "modeled_midway_fit": {
+    "5in_38_single_mounts": 8,
+    "quad_1p1in_mounts": 4,
+    "20mm_oerlikon_positions": 30,
+    "note": "Counts are used as the v2.6 Midway-period art target. Exact gun coordinates are reconstruction approximations pending archival plan tracing."
+  },
+  "web_reference_index": [
+    {
+      "source": "NavSource USS Enterprise CV-6 photo index",
+      "reference": "19-N-29691",
+      "note": "March 1942 island detail: CXAM-1 radar and two 1.1-inch quad mounts visible."
+    },
+    {
+      "source": "NavSource USS Enterprise CV-6 photo index",
+      "reference": "19-N-29696",
+      "note": "March 1942 island detail: large stack, searchlights, cranes and numerous 20 mm guns."
+    },
+    {
+      "source": "NavSource USS Enterprise CV-6 photo index",
+      "reference": "80-G-7745 / 80-G-7746",
+      "note": "4 June 1942 flight deck detail: wooden decking, metal tie-down strips and distance markings."
+    },
+    {
+      "source": "NavSource USS Enterprise CV-6 photo index",
+      "reference": "80-G-41686",
+      "note": "4 June 1942 VT-6 TBD aircraft spotted for launch on Enterprise."
+    }
+  ],
+  "reconstruction_only": [
+    "exact hull station curves",
+    "exact island dimensions",
+    "exact AA mount coordinates",
+    "camouflage RGB values",
+    "procedural PBR roughness/normal maps",
+    "interior compartment partitions",
+    "representative aircraft parking positions"
+  ]
+}

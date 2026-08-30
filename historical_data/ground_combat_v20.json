@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "system": "combined_arms_ground_combat",
+  "historical_lock": true,
+  "source_policy": "TRAINING_GAMEPLAY_ABSTRACTION_UNLESS_SEPARATELY_SOURCED",
+  "locked_historical_scenarios_modified": false,
+  "training_abstractions": [
+    "combined-arms training village geometry",
+    "fireteam roster and names",
+    "opposing-force contacts",
+    "weapon magazine and performance coefficients",
+    "cover and suppression values",
+    "casualty/medical coefficients",
+    "air/naval support effects",
+    "exercise objectives and timing"
+  ],
+  "integrations": [
+    "ground_ops air_support_points",
+    "task_force escort ammunition",
+    "career qualifications and persistence",
+    "seamless BASE world layer"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "feature": "persistent_naval_campaign",
+  "version": "1.4.0",
+  "historical_lock": true,
+  "historical_scenario_unchanged": "midway_1942_manifest.json",
+  "training_abstractions": [
+    "operational base names/coordinates beyond sourced scenario data",
+    "base inventory quantities",
+    "convoy schedules and cargo quantities",
+    "training interdiction zone",
+    "repair-yard rates and capacity",
+    "campaign mission geometry/rewards",
+    "navigation time-compression rules"
+  ],
+  "persistent_systems": [
+    "bases",
+    "convoys",
+    "missions",
+    "finite logistics stocks",
+    "port service",
+    "escort repair routing",
+    "campaign score",
+    "navigation time compression"
+  ]
+}

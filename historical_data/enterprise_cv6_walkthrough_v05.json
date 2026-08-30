@@ -1,0 +1,693 @@
+{
+  "schema": "war-simulator-enterprise-walkthrough-v1",
+  "build": "0.5.0",
+  "ship": "USS Enterprise (CV-6)",
+  "historical_context": "Battle of Midway \u2014 4 June 1942",
+  "geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_DECK_PLAN",
+  "historical_lock": "Inherited from enterprise_cv6_midway_station_duty + midway_1942_manifest; canonical historical event sequence is not rewritten by walkthrough movement or score.",
+  "decks": {
+    "ISLAND": {
+      "name": "Island / Command Spaces",
+      "collision_grid": [
+        "################################",
+        "#.............##...............#",
+        "#.............##...............#",
+        "#.............##...............#",
+        "#..............................#",
+        "#..............................#",
+        "######..##########..############",
+        "#..............................#",
+        "#..............................#",
+        "#....######..........######....#",
+        "#....#....#..........#....#....#",
+        "#....#....#..........#....#....#",
+        "#....#....#..........#....#....#",
+        "#....######..........######....#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "################################"
+      ]
+    },
+    "FLIGHT": {
+      "name": "Flight Deck",
+      "collision_grid": [
+        "################################",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#.....................#####....#",
+        "#.....................#####....#",
+        "#.....................#####....#",
+        "#.....................#####....#",
+        "#.....................#####....#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "################################"
+      ]
+    },
+    "HANGAR": {
+      "name": "Hangar Deck",
+      "collision_grid": [
+        "################################",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..####..................####..#",
+        "#..#..#..................#..#..#",
+        "#..#..#..................#..#..#",
+        "#..####..................####..#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "#..####..................####..#",
+        "#..#..#..................#..#..#",
+        "#..#..#..................#..#..#",
+        "#..####..................####..#",
+        "#..............................#",
+        "#..............................#",
+        "################################"
+      ]
+    },
+    "ENGINEERING": {
+      "name": "Engineering / Damage Control",
+      "collision_grid": [
+        "################################",
+        "#..............##..............#",
+        "#..............##..............#",
+        "#..............##..............#",
+        "#..............................#",
+        "#..............................#",
+        "########..############..########",
+        "#..............................#",
+        "#..............................#",
+        "#....######..........######....#",
+        "#....#....#..........#....#....#",
+        "#....#....#..........#....#....#",
+        "#....#....#..........#....#....#",
+        "#....######..........######....#",
+        "#..............................#",
+        "#..............................#",
+        "#..............................#",
+        "################################"
+      ]
+    }
+  },
+  "zones": [
+    {
+      "deck": "ISLAND",
+      "name": "Bridge",
+      "bounds": [
+        1.2,
+        1.2,
+        13.6,
+        5.7
+      ],
+      "station": "BRIDGE"
+    },
+    {
+      "deck": "ISLAND",
+      "name": "Combat Information Center",
+      "bounds": [
+        16.2,
+        1.2,
+        30.6,
+        5.7
+      ],
+      "station": "CIC"
+    },
+    {
+      "deck": "ISLAND",
+      "name": "Radio Central",
+      "bounds": [
+        1.2,
+        7.2,
+        14.8,
+        16.6
+      ],
+      "station": "RADIO"
+    },
+    {
+      "deck": "ISLAND",
+      "name": "Fire Control / Air Defense",
+      "bounds": [
+        17.2,
+        7.2,
+        30.6,
+        16.6
+      ],
+      "station": "FIRE_CONTROL"
+    },
+    {
+      "deck": "FLIGHT",
+      "name": "Forward Flight Deck",
+      "bounds": [
+        1.1,
+        1.1,
+        12.0,
+        16.6
+      ],
+      "station": "AIR_OPS"
+    },
+    {
+      "deck": "FLIGHT",
+      "name": "Midships Flight Deck",
+      "bounds": [
+        12.0,
+        1.1,
+        21.6,
+        16.6
+      ],
+      "station": "AIR_OPS"
+    },
+    {
+      "deck": "FLIGHT",
+      "name": "Aft Flight Deck",
+      "bounds": [
+        21.6,
+        10.2,
+        30.7,
+        16.6
+      ],
+      "station": "AIR_OPS"
+    },
+    {
+      "deck": "FLIGHT",
+      "name": "Island Exterior",
+      "bounds": [
+        21.0,
+        4.7,
+        27.4,
+        10.3
+      ],
+      "station": null
+    },
+    {
+      "deck": "HANGAR",
+      "name": "Forward Hangar Bay",
+      "bounds": [
+        1.2,
+        1.2,
+        10.6,
+        16.6
+      ],
+      "station": "AIR_OPS"
+    },
+    {
+      "deck": "HANGAR",
+      "name": "Mid Hangar Bay",
+      "bounds": [
+        10.6,
+        1.2,
+        21.4,
+        16.6
+      ],
+      "station": "AIR_OPS"
+    },
+    {
+      "deck": "HANGAR",
+      "name": "Aft Hangar Bay",
+      "bounds": [
+        21.4,
+        1.2,
+        30.7,
+        16.6
+      ],
+      "station": "AIR_OPS"
+    },
+    {
+      "deck": "ENGINEERING",
+      "name": "Main Engineering Control",
+      "bounds": [
+        1.2,
+        1.2,
+        14.8,
+        5.8
+      ],
+      "station": "ENGINEERING"
+    },
+    {
+      "deck": "ENGINEERING",
+      "name": "Damage Control Central",
+      "bounds": [
+        16.2,
+        1.2,
+        30.7,
+        5.8
+      ],
+      "station": "DAMAGE_CONTROL"
+    },
+    {
+      "deck": "ENGINEERING",
+      "name": "Machinery Passage",
+      "bounds": [
+        1.2,
+        7.1,
+        15.0,
+        16.6
+      ],
+      "station": "ENGINEERING"
+    },
+    {
+      "deck": "ENGINEERING",
+      "name": "Repair / Medical Staging",
+      "bounds": [
+        17.0,
+        7.1,
+        30.7,
+        16.6
+      ],
+      "station": "DAMAGE_CONTROL"
+    }
+  ],
+  "equipment": [
+    {
+      "key": "HELM",
+      "deck": "ISLAND",
+      "x": 4.0,
+      "y": 2.8,
+      "name": "Helm / course repeater",
+      "station": "BRIDGE",
+      "action": "STEADY_COURSE",
+      "detail": "Steady the ordered course and verify heading response.",
+      "qualification_step": "HELM"
+    },
+    {
+      "key": "ENGINE_TELEGRAPH",
+      "deck": "ISLAND",
+      "x": 9.5,
+      "y": 2.8,
+      "name": "Engine order telegraph",
+      "station": "BRIDGE",
+      "action": "AVIATION_COURSE",
+      "detail": "Set the aviation maneuver and high-speed engine order.",
+      "qualification_step": "TELEGRAPH"
+    },
+    {
+      "key": "BRIDGE_LOG",
+      "deck": "ISLAND",
+      "x": 6.5,
+      "y": 4.8,
+      "name": "Bridge watch log",
+      "station": "BRIDGE",
+      "action": "WATCH_TURNOVER",
+      "detail": "Conduct formal watch turnover and log current orders.",
+      "qualification_step": "TURNOVER"
+    },
+    {
+      "key": "CIC_PLOT",
+      "deck": "ISLAND",
+      "x": 20.0,
+      "y": 2.8,
+      "name": "CIC tactical plot",
+      "station": "CIC",
+      "action": "SMART_CIC",
+      "detail": "Plot or refine the highest-priority carrier contact task.",
+      "qualification_step": "PLOT"
+    },
+    {
+      "key": "RADAR_CONSOLE",
+      "deck": "ISLAND",
+      "x": 27.0,
+      "y": 2.8,
+      "name": "Air-search radar console",
+      "station": "CIC",
+      "action": "VERIFY_PLOT",
+      "detail": "Cross-check radar, lookout, and report information.",
+      "qualification_step": "RADAR"
+    },
+    {
+      "key": "RADIO_RACK",
+      "deck": "ISLAND",
+      "x": 5.0,
+      "y": 10.0,
+      "name": "Priority radio circuits",
+      "station": "RADIO",
+      "action": "SMART_RADIO",
+      "detail": "Open or route the highest-priority operational radio task.",
+      "qualification_step": "ROUTE"
+    },
+    {
+      "key": "RADIO_LOG",
+      "deck": "ISLAND",
+      "x": 10.5,
+      "y": 14.0,
+      "name": "Radio message log",
+      "station": "RADIO",
+      "action": "RADIO_CHECK",
+      "detail": "Run the circuit check and preserve timing/source information.",
+      "qualification_step": "CIRCUITS"
+    },
+    {
+      "key": "AA_DIRECTOR",
+      "deck": "ISLAND",
+      "x": 22.0,
+      "y": 10.0,
+      "name": "Air-defense director",
+      "station": "FIRE_CONTROL",
+      "action": "SMART_AA",
+      "detail": "Raise the required air-defense readiness for the current task.",
+      "qualification_step": "AA_READY"
+    },
+    {
+      "key": "TRACK_BOARD",
+      "deck": "ISLAND",
+      "x": 28.0,
+      "y": 14.0,
+      "name": "Air track correlation board",
+      "station": "FIRE_CONTROL",
+      "action": "TRACK_CHECK",
+      "detail": "Correlate radar and visual tracks before classification.",
+      "qualification_step": "TRACK"
+    },
+    {
+      "key": "ISLAND_LADDER",
+      "deck": "ISLAND",
+      "x": 15.5,
+      "y": 14.8,
+      "name": "Island ladder to flight deck",
+      "station": null,
+      "action": "TO_FLIGHT",
+      "detail": "Descend to the flight deck.",
+      "qualification_step": null
+    },
+    {
+      "key": "FLIGHT_CONTROL",
+      "deck": "FLIGHT",
+      "x": 24.2,
+      "y": 7.2,
+      "name": "Flight-deck control",
+      "station": "AIR_OPS",
+      "action": "SMART_AIR",
+      "detail": "Prepare, launch, or recover the flight cycle as current conditions require.",
+      "qualification_step": "DECK_CONTROL"
+    },
+    {
+      "key": "ELEVATOR_1_TOP",
+      "deck": "FLIGHT",
+      "x": 6.0,
+      "y": 6.0,
+      "name": "Aircraft elevator No. 1",
+      "station": "AIR_OPS",
+      "action": "ELEVATOR_1",
+      "detail": "Operate forward aircraft elevator.",
+      "qualification_step": "ELEVATORS"
+    },
+    {
+      "key": "ELEVATOR_2_TOP",
+      "deck": "FLIGHT",
+      "x": 15.5,
+      "y": 10.0,
+      "name": "Aircraft elevator No. 2",
+      "station": "AIR_OPS",
+      "action": "ELEVATOR_2",
+      "detail": "Operate midships aircraft elevator.",
+      "qualification_step": "ELEVATORS"
+    },
+    {
+      "key": "ELEVATOR_3_TOP",
+      "deck": "FLIGHT",
+      "x": 27.0,
+      "y": 13.5,
+      "name": "Aircraft elevator No. 3",
+      "station": "AIR_OPS",
+      "action": "ELEVATOR_3",
+      "detail": "Operate aft aircraft elevator.",
+      "qualification_step": "ELEVATORS"
+    },
+    {
+      "key": "DECK_SAFETY",
+      "deck": "FLIGHT",
+      "x": 18.0,
+      "y": 4.0,
+      "name": "Flight-deck safety board",
+      "station": "AIR_OPS",
+      "action": "DECK_SAFETY_CHECK",
+      "detail": "Verify movement lanes, firefighting equipment, and deck safety.",
+      "qualification_step": "SAFETY"
+    },
+    {
+      "key": "FLIGHT_TO_ISLAND",
+      "deck": "FLIGHT",
+      "x": 25.5,
+      "y": 8.7,
+      "name": "Island access ladder",
+      "station": null,
+      "action": "TO_ISLAND",
+      "detail": "Climb to command spaces.",
+      "qualification_step": null
+    },
+    {
+      "key": "FLIGHT_TO_HANGAR",
+      "deck": "FLIGHT",
+      "x": 15.5,
+      "y": 14.8,
+      "name": "Hangar access",
+      "station": null,
+      "action": "TO_HANGAR",
+      "detail": "Descend to hangar deck.",
+      "qualification_step": null
+    },
+    {
+      "key": "FUEL_STATION",
+      "deck": "HANGAR",
+      "x": 5.0,
+      "y": 3.0,
+      "name": "Aviation fueling control",
+      "station": "AIR_OPS",
+      "action": "FUEL_AIRCRAFT",
+      "detail": "Fuel the nearest aircraft package using the training handling sequence.",
+      "qualification_step": "FUEL"
+    },
+    {
+      "key": "ORDNANCE_STATION",
+      "deck": "HANGAR",
+      "x": 5.0,
+      "y": 14.5,
+      "name": "Aviation ordnance control",
+      "station": "AIR_OPS",
+      "action": "ARM_AIRCRAFT",
+      "detail": "Arm the nearest aircraft package using the training handling sequence.",
+      "qualification_step": "ARM"
+    },
+    {
+      "key": "TUG_CONTROL",
+      "deck": "HANGAR",
+      "x": 16.0,
+      "y": 8.5,
+      "name": "Aircraft handling / tug control",
+      "station": "AIR_OPS",
+      "action": "MOVE_AIRCRAFT",
+      "detail": "Move a prepared aircraft package toward an available elevator.",
+      "qualification_step": "HANDLE"
+    },
+    {
+      "key": "ELEVATOR_1_BOTTOM",
+      "deck": "HANGAR",
+      "x": 8.0,
+      "y": 5.0,
+      "name": "Aircraft elevator No. 1 lower control",
+      "station": "AIR_OPS",
+      "action": "ELEVATOR_1",
+      "detail": "Operate forward aircraft elevator.",
+      "qualification_step": "ELEVATORS"
+    },
+    {
+      "key": "ELEVATOR_2_BOTTOM",
+      "deck": "HANGAR",
+      "x": 16.0,
+      "y": 12.0,
+      "name": "Aircraft elevator No. 2 lower control",
+      "station": "AIR_OPS",
+      "action": "ELEVATOR_2",
+      "detail": "Operate midships aircraft elevator.",
+      "qualification_step": "ELEVATORS"
+    },
+    {
+      "key": "ELEVATOR_3_BOTTOM",
+      "deck": "HANGAR",
+      "x": 25.5,
+      "y": 8.0,
+      "name": "Aircraft elevator No. 3 lower control",
+      "station": "AIR_OPS",
+      "action": "ELEVATOR_3",
+      "detail": "Operate aft aircraft elevator.",
+      "qualification_step": "ELEVATORS"
+    },
+    {
+      "key": "HANGAR_TO_FLIGHT",
+      "deck": "HANGAR",
+      "x": 15.5,
+      "y": 2.0,
+      "name": "Flight-deck access",
+      "station": null,
+      "action": "TO_FLIGHT",
+      "detail": "Climb to flight deck.",
+      "qualification_step": null
+    },
+    {
+      "key": "HANGAR_TO_ENG",
+      "deck": "HANGAR",
+      "x": 29.0,
+      "y": 15.0,
+      "name": "Engineering access ladder",
+      "station": null,
+      "action": "TO_ENGINEERING",
+      "detail": "Descend to engineering/damage-control spaces.",
+      "qualification_step": null
+    },
+    {
+      "key": "ENG_CONSOLE",
+      "deck": "ENGINEERING",
+      "x": 6.0,
+      "y": 3.0,
+      "name": "Main engineering maneuvering console",
+      "station": "ENGINEERING",
+      "action": "SMART_ENG",
+      "detail": "Set the appropriate plant maneuvering condition or balance load.",
+      "qualification_step": "PLANT"
+    },
+    {
+      "key": "LOAD_BOARD",
+      "deck": "ENGINEERING",
+      "x": 12.0,
+      "y": 4.5,
+      "name": "Electrical load board",
+      "station": "ENGINEERING",
+      "action": "BALANCE_LOAD",
+      "detail": "Balance electrical load and confirm reserve margin.",
+      "qualification_step": "LOAD"
+    },
+    {
+      "key": "DC_BOARD",
+      "deck": "ENGINEERING",
+      "x": 21.0,
+      "y": 3.0,
+      "name": "Damage-control status board",
+      "station": "DAMAGE_CONTROL",
+      "action": "SMART_DC",
+      "detail": "Set or recheck damage-control readiness as the watch requires.",
+      "qualification_step": "DC_READY"
+    },
+    {
+      "key": "BOUNDARY_BOARD",
+      "deck": "ENGINEERING",
+      "x": 27.0,
+      "y": 4.5,
+      "name": "Watertight boundary board",
+      "station": "DAMAGE_CONTROL",
+      "action": "CHECK_BOUNDARIES",
+      "detail": "Inspect and verify watertight boundaries.",
+      "qualification_step": "BOUNDARIES"
+    },
+    {
+      "key": "MEDICAL_STAGING",
+      "deck": "ENGINEERING",
+      "x": 23.0,
+      "y": 13.0,
+      "name": "Medical / repair-party staging",
+      "station": "DAMAGE_CONTROL",
+      "action": "MEDICAL_CHECK",
+      "detail": "Verify medical support and repair-party staging.",
+      "qualification_step": "MEDICAL"
+    },
+    {
+      "key": "ENG_TO_HANGAR",
+      "deck": "ENGINEERING",
+      "x": 29.0,
+      "y": 15.0,
+      "name": "Hangar access ladder",
+      "station": null,
+      "action": "TO_HANGAR",
+      "detail": "Climb to hangar deck.",
+      "qualification_step": null
+    }
+  ],
+  "qualification_requirements": {
+    "BRIDGE": [
+      "HELM",
+      "TELEGRAPH",
+      "TURNOVER"
+    ],
+    "CIC": [
+      "PLOT",
+      "RADAR"
+    ],
+    "RADIO": [
+      "ROUTE",
+      "CIRCUITS"
+    ],
+    "ENGINEERING": [
+      "PLANT",
+      "LOAD"
+    ],
+    "DAMAGE_CONTROL": [
+      "DC_READY",
+      "BOUNDARIES",
+      "MEDICAL"
+    ],
+    "FIRE_CONTROL": [
+      "AA_READY",
+      "TRACK"
+    ],
+    "AIR_OPS": [
+      "DECK_CONTROL",
+      "ELEVATORS",
+      "SAFETY",
+      "FUEL",
+      "ARM",
+      "HANDLE"
+    ]
+  },
+  "aircraft_training_packages": [
+    {
+      "key": "F4F_CAP",
+      "label": "CAP section",
+      "aircraft_type": "F4F Wildcat",
+      "count": 6,
+      "initial_deck": "HANGAR"
+    },
+    {
+      "key": "SBD_SCOUT",
+      "label": "Scout section",
+      "aircraft_type": "SBD Dauntless",
+      "count": 6,
+      "initial_deck": "HANGAR"
+    },
+    {
+      "key": "SBD_STRIKE_A",
+      "label": "Bombing section A",
+      "aircraft_type": "SBD Dauntless",
+      "count": 8,
+      "initial_deck": "HANGAR"
+    },
+    {
+      "key": "SBD_STRIKE_B",
+      "label": "Bombing section B",
+      "aircraft_type": "SBD Dauntless",
+      "count": 8,
+      "initial_deck": "HANGAR"
+    },
+    {
+      "key": "TBD_TORPEDO",
+      "label": "Torpedo section",
+      "aircraft_type": "TBD Devastator",
+      "count": 8,
+      "initial_deck": "HANGAR"
+    },
+    {
+      "key": "F4F_RESERVE",
+      "label": "Fighter reserve",
+      "aircraft_type": "F4F Wildcat",
+      "count": 4,
+      "initial_deck": "HANGAR"
+    }
+  ],
+  "disclaimer": "Aircraft package sizes, movement geometry, equipment coordinates, watch-roster names, and station practical interactions are gameplay/training abstractions unless separately supported by the historical source register."
+}

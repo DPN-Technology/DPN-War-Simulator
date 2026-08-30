@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "system": "naval_combat_and_carrier_air_operations",
+  "historical_lock": true,
+  "training_raid_policy": "SIMULATED_NON_HISTORICAL_INJECT",
+  "weapon_calibration_policy": "GAMEPLAY_TRAINING_VALUES_NOT_ARCHIVAL_CV6_TRIAL_DATA",
+  "inventory_policy": "TRAINING_RESOURCE_POOLS_NOT_CLAIMED_AS_EXACT_JUNE_1942_INVENTORY",
+  "geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_1942_DECK_PLAN",
+  "historical_midway_timeline_modified": false,
+  "physical_integrations": [
+    "CIC_PLOT",
+    "RADAR_CONSOLE",
+    "AA_DIRECTOR",
+    "TRACK_BOARD",
+    "FLIGHT_CONTROL",
+    "ORDNANCE_STATION",
+    "equipment_runtime_faults",
+    "ship_hull_integrity",
+    "ship_physics_propulsion_and_steering"
+  ],
+  "combat_resources": [
+    "ready_service_ammunition",
+    "reserve_ammunition",
+    "aviation_fuel",
+    "fighter_ammunition",
+    "bomb_stores",
+    "torpedo_stores"
+  ]
+}

@@ -1,0 +1,602 @@
+{
+  "schema_version": 1,
+  "scenario_id": "midway_1942_ops_watch",
+  "title": "Battle of Midway \u2014 Historical Operations Watch",
+  "date": "1942-06-04",
+  "mode": "historical_lock",
+  "player_perspective": "Composite U.S. carrier-task-force operations watch training perspective",
+  "historical_scope": "Information handling and operations plotting during the 4 June carrier battle",
+  "order_of_battle": {
+    "U.S. Task Force 16 \u2014 Rear Adm. Raymond A. Spruance": {
+      "source": "nhhc_strategic_analysis",
+      "units": [
+        "Aircraft carriers: USS Enterprise (CV-6), USS Hornet (CV-8)",
+        "Heavy cruisers: USS Northampton, USS Vincennes, USS Pensacola, USS Minneapolis, USS New Orleans",
+        "Light cruiser (AA): USS Atlanta",
+        "Destroyers: USS Worden, USS Monaghan, USS Aylwin, USS Phelps, USS Balch, USS Conyngham, USS Benham, USS Ellet, USS Maury"
+      ]
+    },
+    "U.S. Task Force 17 \u2014 Rear Adm. Frank Jack Fletcher": {
+      "source": "nhhc_strategic_analysis",
+      "units": [
+        "Aircraft carrier: USS Yorktown (CV-5)",
+        "Heavy cruisers: USS Astoria, USS Portland",
+        "Destroyers: USS Morris, USS Russell, USS Hammann, USS Anderson, USS Hughes"
+      ]
+    },
+    "Japanese Carrier Strike Force \u2014 Vice Adm. Chuichi Nagumo": {
+      "source": "nhhc_combat_narrative",
+      "units": [
+        "Carrier Division 1: Akagi, Kaga",
+        "Carrier Division 2: Soryu, Hiryu",
+        "Battleships: Haruna, Kirishima",
+        "Heavy cruisers: Tone, Chikuma",
+        "Light cruiser: Nagara",
+        "Destroyer screen: 12 destroyers (carrier striking-force screen in the cited combat narrative)"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "key": "nhhc_midway_overview",
+      "title": "Battle of Midway",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/browse-by-topic/wars-conflicts-and-operations/world-war-ii/1942/midway.html",
+      "notes": "Used for the U.S. and Japanese carrier forces, COMINT context, task-force organization, and the broad sequence of the 4 June carrier battle."
+    },
+    {
+      "key": "nhhc_isr",
+      "title": "H-006-2 ISR at Midway",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/about-us/leadership/director/directors-corner/h-grams/h-gram-006/h-006-2.html",
+      "notes": "Used for early 4 June reconnaissance reporting: 0530 sighting/0534 report, 0545 inbound-aircraft report, 0552 carrier sighting, 0553 Midway radar detection, and the fact that carrier-contact information reached senior commanders shortly after 0600."
+    },
+    {
+      "key": "nhhc_timeline",
+      "title": "Battle of Midway: Timeline of Significant Events, June 4, 1942",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/content/dam/nhhc/news-and-events/multimedia%20gallery/LargeFormatBanners/LargeFormatPDF/PopUp_NHHC_BattleOfMidway_Panel2.pdf",
+      "notes": "Used for the published 0700, 0838, 1020, 1022-1026, 1208, 1441, 1445, 1455, 1500, 1810, and 1830 timeline markers."
+    },
+    {
+      "key": "nhhc_aerology",
+      "title": "Battle of Midway: Aerology and Naval Warfare",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/b/battl-of-midway-aerology-and-naval-warfare.html",
+      "notes": "Used for 4 June weather: broken/overcast ceilings, showers, visibility variation, Midway's clear conditions, and the effect of fronts and light southeasterly winds on scouting and carrier aviation."
+    },
+    {
+      "key": "nhhc_strategic_analysis",
+      "title": "Battle of Midway: Strategic and Tactical Analysis",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/content/dam/nhhc/browse-by-topic/War%20and%20Conflict/WWII/midway_strategic_and_tactical_analysis.pdf",
+      "notes": "Used for the detailed composition of U.S. Task Forces 16 and 17, including their carrier, cruiser, and destroyer screens."
+    },
+    {
+      "key": "nhhc_combat_narrative",
+      "title": "Battle of Midway: 3-6 June 1942 Combat Narrative",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/b/battle-of-midway-3-6-june-1942-combat-narrative.html",
+      "notes": "Used for the carrier-centric composition of the Japanese Striking Force and additional task-force operational context."
+    }
+  ],
+  "weather_zones": [
+    {
+      "key": "MIDWAY",
+      "name": "Midway Atoll",
+      "ceiling_ft": "Unlimited",
+      "visibility_nm": ">12",
+      "wind": "Light easterly",
+      "conditions": "Clear early; good local visual conditions",
+      "detection_modifier": 1.08,
+      "aviation_modifier": 1.04
+    },
+    {
+      "key": "JAPANESE_FORCE",
+      "name": "Northwest carrier-force area",
+      "ceiling_ft": "1,000-2,300 broken",
+      "visibility_nm": "Good except showers",
+      "wind": "Variable / post-frontal",
+      "conditions": "Broken cloud, scattered showers; concealment available",
+      "detection_modifier": 0.72,
+      "aviation_modifier": 0.86
+    },
+    {
+      "key": "US_FORCE",
+      "name": "U.S. carrier task-force area",
+      "ceiling_ft": "Unlimited locally, lowering westward; later 1,000-2,300",
+      "visibility_nm": "Generally good",
+      "wind": "Light southeasterly by late morning",
+      "conditions": "Cloudy/broken with scattered showers after frontal passage",
+      "detection_modifier": 0.9,
+      "aviation_modifier": 0.9
+    }
+  ],
+  "plot": {
+    "type": "schematic_normalized",
+    "coordinates": {
+      "MIDWAY": [
+        0.5,
+        0.62
+      ],
+      "TF16": [
+        0.68,
+        0.35
+      ],
+      "TF17": [
+        0.63,
+        0.38
+      ],
+      "JAPANESE_SEARCH_AREA": [
+        0.29,
+        0.27
+      ]
+    },
+    "historical_claim": false,
+    "note": "Coordinates are for relative-direction gameplay only and are not exact historical geodetic positions."
+  },
+  "events": [
+    {
+      "id": "pby_ship_sighting",
+      "occurrence_time": "05:30",
+      "report_time": "05:34",
+      "category": "INTEL",
+      "headline": "PBY reports Japanese ships northwest of Midway",
+      "detail": "A patrol aircraft sighted Japanese ships northwest of Midway at 0530 and issued its sighting report at 0534. The report is useful, but it is not perfect knowledge of the entire enemy force.",
+      "source": "nhhc_isr",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_SURFACE",
+        "label": "Japanese surface contact",
+        "bearing_deg": 315,
+        "range_nm": 180,
+        "confidence": 42,
+        "uncertainty_nm": 45,
+        "classification": "SURFACE FORCE",
+        "note": "Initial patrol-aircraft report"
+      }
+    },
+    {
+      "id": "incoming_air",
+      "occurrence_time": "05:45",
+      "report_time": "05:45",
+      "category": "AIR WARNING",
+      "headline": "Many aircraft reported heading toward Midway",
+      "detail": "A second PBY reported many aircraft heading toward Midway. This is an air-warning report, not a precise carrier-position solution.",
+      "source": "nhhc_isr",
+      "own_force": false,
+      "contact_update": null
+    },
+    {
+      "id": "carrier_sighting",
+      "occurrence_time": "05:52",
+      "report_time": "05:52",
+      "category": "INTEL",
+      "headline": "Two Japanese carriers sighted",
+      "detail": "The same patrol aircraft sighted two Japanese carriers. The report improves the plot but still leaves uncertainty about the full Japanese carrier force.",
+      "source": "nhhc_isr",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_CARRIERS",
+        "label": "Japanese carrier contact",
+        "bearing_deg": 315,
+        "range_nm": 155,
+        "confidence": 62,
+        "uncertainty_nm": 28,
+        "classification": "CARRIERS",
+        "note": "Two carriers visually reported"
+      }
+    },
+    {
+      "id": "midway_radar",
+      "occurrence_time": "05:53",
+      "report_time": "05:53",
+      "category": "RADAR",
+      "headline": "Midway radar detects inbound strike",
+      "detail": "Midway radar detected the incoming Japanese strike. The defensive warning is now corroborated by a different sensor source.",
+      "source": "nhhc_isr",
+      "own_force": false,
+      "contact_update": null
+    },
+    {
+      "id": "carrier_report_reaches_command",
+      "occurrence_time": "05:52",
+      "report_time": "06:05",
+      "category": "COMMAND NET",
+      "headline": "Carrier-contact information reaches carrier commanders",
+      "detail": "Carrier-contact information reached senior U.S. commanders shortly after 0600. The simulation deliberately models the gap between observation and command-level receipt.",
+      "source": "nhhc_isr",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_CARRIERS",
+        "label": "Japanese carrier contact",
+        "bearing_deg": 315,
+        "range_nm": 155,
+        "confidence": 72,
+        "uncertainty_nm": 22,
+        "classification": "CARRIERS",
+        "note": "Command-level receipt; position remains approximate"
+      }
+    },
+    {
+      "id": "tf16_launch",
+      "occurrence_time": "07:00",
+      "report_time": "07:00",
+      "category": "OWN FORCE",
+      "headline": "Enterprise and Hornet begin launching",
+      "detail": "Enterprise and Hornet begin launching their attack groups.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "yorktown_launch",
+      "occurrence_time": "08:38",
+      "report_time": "08:38",
+      "category": "OWN FORCE",
+      "headline": "Yorktown launches",
+      "detail": "Yorktown begins launching its strike according to the NHHC significant-events timeline.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "torpedo_attack",
+      "occurrence_time": "10:20",
+      "report_time": "10:25",
+      "category": "BATTLE REPORT",
+      "headline": "U.S. carrier torpedo squadrons attack",
+      "detail": "Enterprise and Yorktown torpedo squadrons attack. Reports arriving at the operations plot remain fragmented and should not be treated as a complete picture of the battle.",
+      "source": "nhhc_timeline",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_CARRIERS",
+        "label": "Japanese carrier contact",
+        "bearing_deg": 300,
+        "range_nm": 135,
+        "confidence": 76,
+        "uncertainty_nm": 18,
+        "classification": "CARRIERS",
+        "note": "Attack reports refine the tactical picture"
+      }
+    },
+    {
+      "id": "three_carriers_hit",
+      "occurrence_time": "10:22",
+      "report_time": "10:30",
+      "category": "BATTLE REPORT",
+      "headline": "Akagi, Kaga, and Soryu hit by dive bombers",
+      "detail": "Between 1022 and 1026, Enterprise and Yorktown dive bombers attacked and hit Akagi, Kaga, and Soryu. The operations watch receives confirmation after the attack window rather than at the instant bombs strike.",
+      "source": "nhhc_timeline",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_CARRIERS",
+        "label": "Japanese carrier contact",
+        "bearing_deg": 300,
+        "range_nm": 135,
+        "confidence": 88,
+        "uncertainty_nm": 12,
+        "classification": "DAMAGED CARRIERS",
+        "note": "Three carriers reported hit; one carrier remains a threat"
+      }
+    },
+    {
+      "id": "hiryu_launch",
+      "occurrence_time": "11:00",
+      "report_time": "11:15",
+      "category": "INTEL INFERENCE",
+      "headline": "Enemy carrier threat remains",
+      "detail": "Historical sources record that Hiryu, which escaped the morning destruction, launched a counterstrike around 1100. The player is not given omniscient launch knowledge at 1100; the scenario instead raises the unresolved-carrier threat as information develops.",
+      "source": "nhhc_midway_overview",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_CARRIERS",
+        "label": "Japanese carrier contact",
+        "bearing_deg": 295,
+        "range_nm": 130,
+        "confidence": 74,
+        "uncertainty_nm": 24,
+        "classification": "AT LEAST ONE OPERATIONAL CARRIER",
+        "note": "Residual carrier threat inferred from continuing enemy air activity"
+      }
+    },
+    {
+      "id": "yorktown_dive_attack",
+      "occurrence_time": "12:08",
+      "report_time": "12:08",
+      "category": "OWN FORCE DAMAGE",
+      "headline": "Japanese dive bombers attack Yorktown",
+      "detail": "Japanese dive bombers attack Yorktown. Carrier-defense, damage-control, and reporting discipline become immediate priorities.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "yorktown_torpedo_attack",
+      "occurrence_time": "14:41",
+      "report_time": "14:41",
+      "category": "OWN FORCE DAMAGE",
+      "headline": "Japanese torpedo planes attack Yorktown",
+      "detail": "A second Japanese strike attacks Yorktown with torpedoes.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "yorktown_hit",
+      "occurrence_time": "14:45",
+      "report_time": "14:45",
+      "category": "OWN FORCE DAMAGE",
+      "headline": "Yorktown hit",
+      "detail": "Yorktown is hit during the torpedo attack.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "yorktown_abandon",
+      "occurrence_time": "14:55",
+      "report_time": "14:55",
+      "category": "OWN FORCE DAMAGE",
+      "headline": "Yorktown abandonment ordered",
+      "detail": "The NHHC significant-events timeline marks Yorktown's abandonment at 1455.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "b17_launch",
+      "occurrence_time": "15:00",
+      "report_time": "15:00",
+      "category": "OWN FORCE",
+      "headline": "B-17s take off from Midway",
+      "detail": "The NHHC significant-events timeline marks a B-17 launch from Midway at 1500.",
+      "source": "nhhc_timeline",
+      "own_force": true,
+      "contact_update": null
+    },
+    {
+      "id": "hiryu_strike",
+      "occurrence_time": "17:00",
+      "report_time": "17:12",
+      "category": "BATTLE REPORT",
+      "headline": "U.S. dive bombers attack Hiryu",
+      "detail": "Historical summaries place the strike that mortally damaged Hiryu around 1700. The report reaches the simulated watch after a communications delay.",
+      "source": "nhhc_midway_overview",
+      "own_force": false,
+      "contact_update": {
+        "key": "JP_CARRIERS",
+        "label": "Japanese carrier contact",
+        "bearing_deg": 286,
+        "range_nm": 120,
+        "confidence": 92,
+        "uncertainty_nm": 9,
+        "classification": "HIRYU HEAVILY DAMAGED",
+        "note": "Late-afternoon strike report"
+      }
+    },
+    {
+      "id": "b17_1810",
+      "occurrence_time": "18:10",
+      "report_time": "18:10",
+      "category": "BATTLE REPORT",
+      "headline": "Two B-17s attack battleship and damaged carrier",
+      "detail": "The NHHC significant-events timeline records a two-aircraft B-17 attack at 1810.",
+      "source": "nhhc_timeline",
+      "own_force": false,
+      "contact_update": null
+    },
+    {
+      "id": "b17_1830",
+      "occurrence_time": "18:30",
+      "report_time": "18:30",
+      "category": "BATTLE REPORT",
+      "headline": "Six B-17s attack damaged carrier and destroyer",
+      "detail": "The NHHC significant-events timeline records a six-aircraft B-17 attack at 1830.",
+      "source": "nhhc_timeline",
+      "own_force": false,
+      "contact_update": null
+    }
+  ],
+  "decisions": [
+    {
+      "id": "air_warning_response",
+      "opens": "05:45",
+      "expires": "06:00",
+      "title": "Incoming air strike report",
+      "briefing": "A patrol aircraft reports many aircraft heading toward Midway. What should an operations watchstander recommend with the information actually available?",
+      "options": [
+        {
+          "label": "Raise air-defense readiness; log the report as unconfirmed track data",
+          "points": 20,
+          "rationale": "Acts promptly without pretending the report is more precise than it is.",
+          "readiness_delta": 8,
+          "intel_delta": 4
+        },
+        {
+          "label": "Wait for visual confirmation before warning anyone",
+          "points": 5,
+          "rationale": "Avoids a false alarm but wastes critical warning time.",
+          "readiness_delta": -7,
+          "intel_delta": -2
+        },
+        {
+          "label": "Declare the enemy carrier force's exact position and strength",
+          "points": 0,
+          "rationale": "This invents information the report does not provide.",
+          "readiness_delta": 0.0,
+          "intel_delta": -14
+        }
+      ],
+      "historical_claim": false,
+      "note": "Decision wording/scoring is a training abstraction; it does not change canonical event timing."
+    },
+    {
+      "id": "carrier_contact_handling",
+      "opens": "06:05",
+      "expires": "06:25",
+      "title": "Carrier contact reaches command",
+      "briefing": "A visual report of two Japanese carriers has reached carrier commanders. The full force and exact position remain uncertain.",
+      "options": [
+        {
+          "label": "Update the plot, preserve uncertainty, and route the contact immediately",
+          "points": 20,
+          "rationale": "Correctly distinguishes a useful contact from perfect intelligence.",
+          "readiness_delta": 4,
+          "intel_delta": 10
+        },
+        {
+          "label": "Treat the two reported carriers as the entire Japanese force",
+          "points": 4,
+          "rationale": "Overconfidence can make later reports harder to interpret.",
+          "readiness_delta": 0.0,
+          "intel_delta": -8
+        },
+        {
+          "label": "Hold the contact until the entire force is identified",
+          "points": 2,
+          "rationale": "Withholds actionable information while waiting for certainty that may never arrive.",
+          "readiness_delta": -5,
+          "intel_delta": -5
+        }
+      ],
+      "historical_claim": false,
+      "note": "Decision wording/scoring is a training abstraction; it does not change canonical event timing."
+    },
+    {
+      "id": "launch_recommendation",
+      "opens": "06:50",
+      "expires": "07:10",
+      "title": "Strike launch planning",
+      "briefing": "Carrier-contact information is available, but weather, range, recovery, CAP, and incomplete enemy information still matter.",
+      "options": [
+        {
+          "label": "Support an organized strike while preserving CAP and recovery margins",
+          "points": 20,
+          "rationale": "Balances offensive action with the continuing need to defend and recover aircraft.",
+          "readiness_delta": 7,
+          "intel_delta": 3
+        },
+        {
+          "label": "Commit every available aircraft and ignore defensive coverage",
+          "points": 4,
+          "rationale": "Maximizes immediate weight but creates avoidable operational risk.",
+          "readiness_delta": -10,
+          "intel_delta": 0.0
+        },
+        {
+          "label": "Recommend no strike until the enemy force is fully mapped",
+          "points": 1,
+          "rationale": "Demands a level of certainty the battle did not provide.",
+          "readiness_delta": -8,
+          "intel_delta": -3
+        }
+      ],
+      "historical_claim": false,
+      "note": "Decision wording/scoring is a training abstraction; it does not change canonical event timing."
+    },
+    {
+      "id": "fragmented_reports",
+      "opens": "10:25",
+      "expires": "10:45",
+      "title": "Fragmented attack reports",
+      "briefing": "Torpedo attacks are underway and early strike reports are arriving. The plot is changing faster than reports can be correlated.",
+      "options": [
+        {
+          "label": "Time-stamp each report, correlate sources, and keep uncertain contacts marked uncertain",
+          "points": 20,
+          "rationale": "Maintains a usable common operating picture under communications delay.",
+          "readiness_delta": 0.0,
+          "intel_delta": 10
+        },
+        {
+          "label": "Declare the entire enemy carrier force destroyed immediately",
+          "points": 0,
+          "rationale": "Premature certainty is exactly what the historical-intelligence model is designed to prevent.",
+          "readiness_delta": 0.0,
+          "intel_delta": -15
+        },
+        {
+          "label": "Discard conflicting reports until they agree",
+          "points": 5,
+          "rationale": "Reduces clutter but can erase important evidence during a fast battle.",
+          "readiness_delta": 0.0,
+          "intel_delta": -6
+        }
+      ],
+      "historical_claim": false,
+      "note": "Decision wording/scoring is a training abstraction; it does not change canonical event timing."
+    },
+    {
+      "id": "residual_carrier_threat",
+      "opens": "11:15",
+      "expires": "11:40",
+      "title": "Residual enemy carrier threat",
+      "briefing": "Three Japanese carriers have been reported hit, yet enemy air activity continues. What should the watch assume?",
+      "options": [
+        {
+          "label": "Keep at least one operational enemy carrier on the threat plot until disproved",
+          "points": 20,
+          "rationale": "Matches disciplined reasoning from incomplete battle reports.",
+          "readiness_delta": 7,
+          "intel_delta": 8
+        },
+        {
+          "label": "Remove all Japanese carrier threats because three were hit",
+          "points": 0,
+          "rationale": "Confuses damage reports with proof that no other carrier can strike.",
+          "readiness_delta": -12,
+          "intel_delta": -12
+        },
+        {
+          "label": "Ignore all carrier reports and focus only on Midway",
+          "points": 3,
+          "rationale": "Abandons the wider tactical picture.",
+          "readiness_delta": -8,
+          "intel_delta": -5
+        }
+      ],
+      "historical_claim": false,
+      "note": "Decision wording/scoring is a training abstraction; it does not change canonical event timing."
+    },
+    {
+      "id": "yorktown_defense",
+      "opens": "12:08",
+      "expires": "12:28",
+      "title": "Yorktown under air attack",
+      "briefing": "Yorktown is under attack. The watch must support defense and damage response while keeping the wider tactical picture alive.",
+      "options": [
+        {
+          "label": "Prioritize CAP/damage reporting while maintaining the enemy-carrier plot",
+          "points": 20,
+          "rationale": "Handles the immediate casualty without losing operational awareness.",
+          "readiness_delta": 8,
+          "intel_delta": 5
+        },
+        {
+          "label": "Stop all plotting until Yorktown's damage is fully known",
+          "points": 5,
+          "rationale": "Focuses on the casualty but sacrifices tactical awareness.",
+          "readiness_delta": 0.0,
+          "intel_delta": -6
+        },
+        {
+          "label": "Ignore Yorktown's attack because the offensive strike is more important",
+          "points": 0,
+          "rationale": "Fails the own-force reporting and survival responsibilities of the watch.",
+          "readiness_delta": -14,
+          "intel_delta": 0.0
+        }
+      ],
+      "historical_claim": false,
+      "note": "Decision wording/scoring is a training abstraction; it does not change canonical event timing."
+    }
+  ],
+  "rules": {
+    "canonical_events_mutable": false,
+    "enemy_contacts_visible_before_report": false,
+    "perfect_ai_information": false,
+    "player_decisions_change_career_score": true,
+    "player_decisions_change_historical_outcome": false
+  }
+}

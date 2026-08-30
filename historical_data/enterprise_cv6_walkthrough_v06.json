@@ -1,0 +1,30 @@
+{
+  "build": "0.6.0",
+  "ship": "USS Enterprise (CV-6)",
+  "scenario": "Battle of Midway — 4 June 1942",
+  "geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_DECK_PLAN",
+  "training_fault_policy": "SIMULATED_INJECTS_NOT_HISTORICAL_CASUALTIES",
+  "historical_lock": true,
+  "gameplay_layers": [
+    "first_person_raycast_navigation",
+    "collision_checked_movement",
+    "interactive_watertight_hatches",
+    "equipment_runtime_health_and_faults",
+    "live_watchstander_avatars",
+    "duty_objective_navigation",
+    "station_practicals",
+    "aircraft_handling",
+    "watch_rotations",
+    "historical_station_task_feed"
+  ],
+  "training_injects": [
+    {"time": "08:05", "equipment": "Radio message log", "fault": "SIMULATED CIRCUIT GROUND"},
+    {"time": "12:10", "equipment": "Electrical load board", "fault": "SIMULATED BUS OVERLOAD"},
+    {"time": "14:30", "equipment": "Damage-control status board", "fault": "SIMULATED FIREMAIN INDICATION FAULT"}
+  ],
+  "notes": [
+    "Training injects exist to exercise troubleshooting and station coordination and are not asserted to have happened aboard Enterprise at Midway.",
+    "Deck geometry, exact console positions, hatch positions, and NPC transit routes are gameplay schematic data.",
+    "Canonical historical event timing and sourced Enterprise/Midway context remain in the existing v0.3-v0.5 historical data layers."
+  ]
+}

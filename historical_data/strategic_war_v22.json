@@ -1,0 +1,17 @@
+{
+  "version": "2.2",
+  "layer": "strategic_war_training",
+  "historical_lock": true,
+  "policy": "TRAINING_SIMULATION_ABSTRACTION_NOT_HISTORICAL_ORDER_OF_BATTLE",
+  "training_abstractions": [
+    "sector names and coordinates",
+    "formation names, commander names, force sizes and combat values",
+    "depot inventories and route capacities",
+    "bridge integrity and interdiction values",
+    "reinforcement timing",
+    "enemy operational AI",
+    "operation deadlines and strategic scoring",
+    "reconnaissance confidence and combat coefficients"
+  ],
+  "historical_scenarios_unchanged": true
+}

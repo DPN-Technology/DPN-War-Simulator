@@ -1,0 +1,21 @@
+{
+  "version": "0.7.0",
+  "runtime": "FirstPerson3DApp",
+  "renderer": "dependency_free_software_3d",
+  "normal_startup": "first_person_3d",
+  "legacy_ui_role": "compatibility_admin_only",
+  "training_center_geometry": "FICTIONAL_TRAINING_ENVIRONMENT",
+  "enterprise_geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_1942_DECK_PLAN",
+  "historical_lock": true,
+  "training_fault_policy": "SIMULATED_INJECTS_NOT_HISTORICAL_CASUALTIES",
+  "preserved_layers": [
+    "career_progression",
+    "qualifications",
+    "ship_systems",
+    "enterprise_station_duty",
+    "midway_historical_timeline",
+    "role_limited_intelligence",
+    "crew_simulation",
+    "save_compatibility"
+  ]
+}

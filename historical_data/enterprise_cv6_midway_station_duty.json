@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "scenario_id": "enterprise_cv6_midway_station_duty",
+  "title": "USS Enterprise (CV-6) \u2014 Battle of Midway Station Duty",
+  "ship": {
+    "name": "USS Enterprise",
+    "hull": "CV-6",
+    "class": "Yorktown class",
+    "role": "TF 16 flagship / fleet aircraft carrier"
+  },
+  "rules": {
+    "historical_lock": true,
+    "canonical_midway_events_mutable": false,
+    "enterprise_direct_battle_damage_invented": false,
+    "enemy_contacts_visible_before_report": false,
+    "station_system_values_are_gameplay_abstractions": true,
+    "schematic_ship_geometry_is_not_exact_compartment_geometry": true
+  },
+  "sources": {
+    "enterprise_action_report": {
+      "title": "USS Enterprise (CV-6) Action Report \u2014 Battle of Midway Island, June 4\u20136, 1942",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/content/history/nhhc/research/archives/digital-exhibits-highlights/action-reports/wwii-battle-of-midway/uss-enterprise-action-report.html",
+      "notes": "Used for Enterprise-specific message traffic, ship operating context, attack-group composition, radar/lookout contact reporting, and the ship's role as TF 16 flagship. Times in the original report use its stated zone convention; this build does not silently replace the v0.3 canonical Midway clock with them."
+    },
+    "nhhc_enterprise": {
+      "title": "USS Enterprise (CV-6)",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/our-collections/photography/us-navy-ships/aircraft-carriers/uss-enterprise--cv-6-.html",
+      "notes": "Used for ship identity, Yorktown-class context, displacement description, and Enterprise's Midway role."
+    },
+    "nhhc_midway": {
+      "title": "Battle of Midway",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/browse-by-topic/wars-conflicts-and-operations/world-war-ii/1942/midway.html",
+      "notes": "Used for TF 16 context, the 4 June battle sequence, and Enterprise flight-deck imagery/caption data including VT-6 preparation and the fourteen TBDs launched from Enterprise."
+    },
+    "nhhc_strategic_analysis": {
+      "title": "Battle of Midway: Strategic and Tactical Analysis",
+      "organization": "Naval History and Heritage Command",
+      "url": "https://www.history.navy.mil/content/dam/nhhc/browse-by-topic/War%20and%20Conflict/WWII/midway_strategic_and_tactical_analysis.pdf",
+      "notes": "Used for TF 16 operating context, launch-cycle analysis, and the documented change to course 240\u00b0 true and 25 knots after launching operations."
+    }
+  },
+  "stations": {
+    "BRIDGE": {
+      "name": "Bridge",
+      "short": "BRG",
+      "mission": "Steer the carrier, maintain formation discipline, and provide safe wind-over-deck conditions for aviation."
+    },
+    "CIC": {
+      "name": "Combat Information Center",
+      "short": "CIC",
+      "mission": "Correlate radar, lookout, scouting, and command-net reports without creating false certainty."
+    },
+    "RADIO": {
+      "name": "Radio Central",
+      "short": "RAD",
+      "mission": "Receive, classify, route, acknowledge, and preserve critical operational traffic."
+    },
+    "ENGINEERING": {
+      "name": "Engineering",
+      "short": "ENG",
+      "mission": "Maintain propulsion, electrical generation, fuel discipline, and readiness for rapid maneuvering."
+    },
+    "DAMAGE_CONTROL": {
+      "name": "Damage Control Central",
+      "short": "DC",
+      "mission": "Set material readiness, stage repair parties, preserve watertight integrity, and prepare for casualties."
+    },
+    "FIRE_CONTROL": {
+      "name": "Fire Control / Air Defense",
+      "short": "FC",
+      "mission": "Maintain air-defense readiness, classify tracks, coordinate lookouts/radar, and avoid wasteful engagement decisions."
+    },
+    "AIR_OPS": {
+      "name": "Aviation Operations",
+      "short": "AIR",
+      "mission": "Coordinate spotting, fueling, arming, launch/recovery cycles, CAP reserve, and flight-deck safety."
+    }
+  },
+  "initial_tasks": [
+    {
+      "key": "prebattle_dc",
+      "station": "DAMAGE_CONTROL",
+      "title": "Set battle damage-control readiness",
+      "detail": "Stage repair parties, verify watertight boundaries, and place Damage Control Central at battle readiness before the air action intensifies.",
+      "opened": 320,
+      "deadline": 350,
+      "action": "SET_DC_READY",
+      "points": 12
+    },
+    {
+      "key": "prebattle_radio",
+      "station": "RADIO",
+      "title": "Open priority command circuits",
+      "detail": "Establish the priority routing watch so scouting and command-net traffic can be acknowledged and forwarded without unnecessary delay.",
+      "opened": 320,
+      "deadline": 340,
+      "action": "OPEN_PRIORITY_NET",
+      "points": 10
+    },
+    {
+      "key": "prebattle_air",
+      "station": "AIR_OPS",
+      "title": "Prepare flight deck for combat cycle",
+      "detail": "Bring spotting, fueling, arming, deck crews, and CAP reserve to launch-ready condition without sacrificing deck safety.",
+      "opened": 320,
+      "deadline": 400,
+      "action": "PREPARE_FLIGHT_DECK",
+      "points": 14
+    },
+    {
+      "key": "prebattle_eng",
+      "station": "ENGINEERING",
+      "title": "Bring plant to maneuvering readiness",
+      "detail": "Prepare propulsion and electrical generation for rapid carrier maneuvering and sustained flight operations.",
+      "opened": 320,
+      "deadline": 390,
+      "action": "MANEUVERING_READY",
+      "points": 10
+    }
+  ],
+  "canonical_event_keys": [
+    "pby_ship_sighting",
+    "incoming_air",
+    "carrier_sighting",
+    "midway_radar",
+    "carrier_report_reaches_command",
+    "tf16_launch",
+    "yorktown_launch",
+    "torpedo_attack",
+    "three_carriers_hit",
+    "hiryu_launch",
+    "yorktown_dive_attack",
+    "yorktown_torpedo_attack",
+    "yorktown_hit",
+    "yorktown_abandon",
+    "b17_launch",
+    "hiryu_strike",
+    "b17_1810",
+    "b17_1830"
+  ],
+  "notes": [
+    "Historical event timing is inherited from the v0.3 Midway scenario package.",
+    "Enterprise-specific source notes are layered on top without silently reconciling differing time-zone conventions across historical documents.",
+    "Bridge wind-over-deck, engineering readiness, station readiness, crew proficiency/fatigue, and deck-readiness percentages are simulation variables rather than archival measurements."
+  ]
+}

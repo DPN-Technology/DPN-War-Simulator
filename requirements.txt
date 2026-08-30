@@ -1,0 +1,3 @@
+# War Simulator v2.7 current Python simulation client uses the standard library at runtime.
+# PyInstaller is required only to produce the fallback standalone Windows EXE.
+pyinstaller>=6.0

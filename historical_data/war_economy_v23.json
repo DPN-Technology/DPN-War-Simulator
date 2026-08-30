@@ -1,0 +1,25 @@
+{
+  "version": "2.3",
+  "historical_lock": true,
+  "classification": "TRAINING_SIMULATION_ABSTRACTION",
+  "purpose": "National war economy, production, replacement, research, training and transport gameplay framework.",
+  "not_historical_claims": [
+    "facility names and coordinates",
+    "raw material and stockpile quantities",
+    "production times and resource costs",
+    "industrial efficiency and damage coefficients",
+    "research project timing/effects",
+    "training pipeline size/timing",
+    "rail/road/port throughput values",
+    "strategic interdiction timing and damage",
+    "national allocation package sizes"
+  ],
+  "integration": [
+    "strategic reinforcement availability",
+    "theater depots",
+    "task-force fuel/ammunition/repair",
+    "carrier air-group replacements/fuel/spares",
+    "land replacements/armor/artillery ammunition",
+    "campaign base logistics"
+  ]
+}

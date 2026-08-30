@@ -1,0 +1,17 @@
+{
+  "version": "2.1.0",
+  "system": "large_scale_land_warfare",
+  "historical_lock": true,
+  "classification": "TRAINING_GAMEPLAY_ABSTRACTION",
+  "not_historical_claims": [
+    "battlefield sector geometry",
+    "unit names and manpower totals",
+    "vehicle performance and ammunition quantities",
+    "artillery shell quantities and effects",
+    "training opposition",
+    "CASEVAC timing",
+    "logistics stock quantities",
+    "joint-fire effects"
+  ],
+  "purpose": "Provide a scalable battalion/combined-arms framework that can later be populated by sourced historical orders of battle and terrain without changing the core career/open-world systems."
+}

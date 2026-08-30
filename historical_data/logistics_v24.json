@@ -1,0 +1,22 @@
+{
+  "version": "2.4.0",
+  "feature": "Strategic Mobility & Global Logistics",
+  "classification": "SIMULATED_TRAINING_ABSTRACTION",
+  "historical_lock": true,
+  "modifies_midway_timeline": false,
+  "inherits_sourced_historical_layer": true,
+  "training_abstractions": [
+    "National Distribution Depot / Strategic Port Delta / Railhead Echo / Forward Depot Foxtrot / Air Logistics Hub Golf / Fleet Anchorage Hotel names",
+    "physical logistics-district geometry",
+    "rail road and sea route distances",
+    "transport speeds and route capacity",
+    "bridge and hub damage coefficients",
+    "cargo package quantities",
+    "shipment priority effects",
+    "interdiction exposure and damage coefficients",
+    "escort protection coefficients",
+    "recipient replenishment conversion rates",
+    "route congestion limits"
+  ],
+  "design_policy": "Production and logistics are connected mechanically while historical event truth remains owned by separately sourced scenario manifests."
+}

@@ -1,0 +1,18 @@
+{
+  "version": "1.6.0",
+  "system": "advanced_physical_world",
+  "historical_lock": true,
+  "geometry_policy": "TRAINING_SCHEMATIC_NOT_EXACT_CV6_DECK_PLAN",
+  "weather_policy": "TRAINING_PRESETS_UNLESS_SCENARIO_SOURCE_OVERRIDES",
+  "damage_visual_policy": "VISUALIZATION_OF_SIMULATED_SURVIVABILITY_STATE_NOT_ARCHIVAL_DAMAGE_PHOTOGRAMMETRY",
+  "animation_policy": "GAMEPLAY_PRESENTATION_NOT_ARCHIVAL_MACHINERY_TIMING",
+  "features": [
+    "animated_hatches",
+    "continuous_ladder_climb",
+    "day_night_lighting",
+    "rain_fog_lightning",
+    "moving_radar_and_machinery",
+    "faceted_hull_visuals",
+    "visible_fire_smoke_flooding"
+  ]
+}

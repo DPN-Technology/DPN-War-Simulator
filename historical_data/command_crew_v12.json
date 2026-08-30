@@ -1,0 +1,31 @@
+{
+  "version": "1.2.0",
+  "system": "command_crew_operations",
+  "historical_lock": true,
+  "scope": "training_simulation",
+  "historical_claims": {
+    "midway_timeline": "retained from sourced historical scenario layer",
+    "department_head_names": "SIMULATION_ROSTER_PLACEHOLDERS",
+    "authority_thresholds": "TRAINING_ABSTRACTION",
+    "manpower_totals": "TRAINING_CALIBRATION",
+    "supply_quantities": "TRAINING_CALIBRATION",
+    "autonomous_response_rates": "TRAINING_CALIBRATION",
+    "watch_cycle": "TRAINING_ROUTINE_NOT_EXACT_JUNE_1942_WATCHBILL"
+  },
+  "departments": [
+    "BRIDGE", "CIC", "RADIO", "ENGINEERING", "DAMAGE_CONTROL",
+    "FIRE_CONTROL", "AIR_OPS", "MEDICAL", "SUPPLY"
+  ],
+  "features": [
+    "rank_gated_orders",
+    "physical_command_desk",
+    "automatic_general_quarters",
+    "autonomous_damage_control",
+    "autonomous_medical",
+    "autonomous_engineering",
+    "visible_crew_battle_station_routing",
+    "watch_relief",
+    "finite_shipboard_stores",
+    "persistent_command_state"
+  ]
+}

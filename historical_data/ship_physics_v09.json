@@ -1,0 +1,26 @@
+{
+  "version": "0.9.0",
+  "system": "ship_physics_and_seamanship",
+  "historical_lock": true,
+  "physics_policy": "TRAINING_SIMULATION_CALIBRATION_NOT_ARCHIVAL_CV6_MANEUVERING_TRIALS",
+  "bathymetry_policy": "SYNTHETIC_TRAINING_SEA_ROOM_NOT_MIDWAY_BATHYMETRY",
+  "interior_reference_frame": "VESSEL_LOCAL",
+  "navigation_reference_frame": "GLOBAL_TRAINING_EAST_NORTH_NAUTICAL_MILES",
+  "features": [
+    "engine_inertia",
+    "backing_power",
+    "speed_dependent_rudder",
+    "yaw_and_turning_radius",
+    "speed_through_water",
+    "speed_over_ground",
+    "course_over_ground",
+    "wind",
+    "current",
+    "roll_pitch_heave",
+    "player_balance_load",
+    "mooring_and_cast_off",
+    "anchor",
+    "grounding",
+    "equipment_fault_coupling"
+  ]
+}

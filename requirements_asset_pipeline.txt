@@ -1,0 +1,5 @@
+# Only needed to regenerate the v2.7 Enterprise GLB/OBJ and texture assets.
+numpy>=2.0
+trimesh>=4.0
+Pillow>=10.0
+matplotlib>=3.8
