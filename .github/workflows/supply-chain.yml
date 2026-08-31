@@ -3,128 +3,81 @@ name: Supply Chain
 on:
   push:
     branches: ["main"]
-    paths:
-      - ".github/workflows/supply-chain.yml"
-      - ".github/scripts/generate_supply_chain.py"
-  release:
-    types: [published]
+  pull_request:
+  schedule:
+    - cron: "41 13 * * 1"
   workflow_dispatch:
 
 permissions:
-  actions: read
-  contents: write
-
-concurrency:
-  group: supply-chain-${{ github.repository }}
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  inventory:
+  sbom-and-provenance:
     runs-on: ubuntu-latest
     steps:
-      - name: Resolve release tag
-        id: release
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          EVENT_TAG: ${{ github.event.release.tag_name }}
-        run: |
-          if [ "$GITHUB_EVENT_NAME" = "release" ] && [ -n "$EVENT_TAG" ]; then
-            tag="$EVENT_TAG"
-          else
-            tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
-          fi
-          test -n "$tag"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "DPN_VERSION=$tag" >> "$GITHUB_ENV"
-
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Preserve DPN inventory generator
-        run: cp .github/scripts/generate_supply_chain.py /tmp/dpn_generate_supply_chain.py
-
-      - name: Checkout exact release source
+      - name: Reject tracked runtime secrets and private state
         shell: bash
         run: |
-          git fetch --tags --force
-          git checkout --detach "${{ steps.release.outputs.tag }}"
-          echo "Release source commit: $(git rev-parse HEAD)"
+          sensitive="$(git ls-files | grep -Ei '(^|/)\.env$|(^|/)(vault|master)[^/]*\.key$|(^|/)FIRST_RUN_LOGIN\.txt$|(^|/)data/.*\.(sqlite|sqlite3|db|enc)$|(^|/)backups/|(^|/)runtime_logs/|(^|/)install_logs/|(^|/)workspace/generated/|(^|/)workspace/uploads/' || true)"
+          test -z "$sensitive" || { echo "::error::Sensitive/runtime files are tracked:"; echo "$sensitive"; exit 1; }
 
-      - name: Generate DPN source hashes and dependency inventory
-        run: python /tmp/dpn_generate_supply_chain.py
-
-      - name: Generate SPDX SBOM and submit dependency snapshot
-        uses: anchore/sbom-action@v0.24.2
+      - name: Generate SPDX SBOM
+        uses: anchore/sbom-action@v0
         with:
           path: .
           format: spdx-json
           output-file: SBOM.spdx.json
-          artifact-name: sbom-spdx
-          dependency-snapshot: false
-          upload-release-assets: false
-          syft-version: v1.51.0
+          upload-artifact: false
 
-      - name: Generate CycloneDX SBOM
-        uses: anchore/sbom-action@v0.24.2
+      - name: Generate build provenance
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, platform
+          from datetime import datetime, timezone
+
+          doc = {
+              "schema": "dpn-provenance/v1",
+              "repository": os.environ.get("GITHUB_REPOSITORY"),
+              "commit": os.environ.get("GITHUB_SHA"),
+              "ref": os.environ.get("GITHUB_REF"),
+              "ref_name": os.environ.get("GITHUB_REF_NAME"),
+              "event": os.environ.get("GITHUB_EVENT_NAME"),
+              "workflow": os.environ.get("GITHUB_WORKFLOW"),
+              "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
+              "workflow_run_number": os.environ.get("GITHUB_RUN_NUMBER"),
+              "runner_os": os.environ.get("RUNNER_OS"),
+              "runner_arch": os.environ.get("RUNNER_ARCH"),
+              "python": platform.python_version(),
+              "generated_utc": datetime.now(timezone.utc).isoformat(),
+          }
+          with open("PROVENANCE.json", "w", encoding="utf-8") as f:
+              json.dump(doc, f, indent=2, sort_keys=True)
+              f.write("\n")
+          PY
+
+      - name: Generate checksums
+        shell: bash
+        run: sha256sum SBOM.spdx.json PROVENANCE.json > SUPPLY_CHAIN_SHA256SUMS.txt
+
+      - name: Validate generated supply-chain files
+        shell: bash
+        run: |
+          python -m json.tool SBOM.spdx.json >/dev/null
+          python -m json.tool PROVENANCE.json >/dev/null
+          sha256sum -c SUPPLY_CHAIN_SHA256SUMS.txt
+
+      - name: Upload supply-chain evidence
+        uses: actions/upload-artifact@v4
         with:
-          path: .
-          format: cyclonedx-json
-          output-file: SBOM.cyclonedx.json
-          artifact-name: sbom-cyclonedx
-          dependency-snapshot: false
-          upload-release-assets: false
-          syft-version: v1.51.0
-
-      - name: Create SBOM verification manifest
-        shell: bash
-        run: |
-          sha256sum SBOM.spdx.json SBOM.cyclonedx.json > SBOM_SHA256SUMS.txt
-          {
-            echo "Repository: $GITHUB_REPOSITORY"
-            echo "Release tag: ${{ steps.release.outputs.tag }}"
-            echo "Release commit: $(git rev-parse HEAD)"
-            echo "Syft: v1.51.0"
-            echo "Generated UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          } > SBOM_MANIFEST.txt
-
-      - name: Verify target release exists
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.release.outputs.tag }}
-        run: gh release view "$RELEASE_TAG" >/dev/null
-
-      - name: Replace supply-chain records on release
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.release.outputs.tag }}
-        run: |
-          assets=(
+          name: supply-chain-${{ github.sha }}
+          path: |
             SBOM.spdx.json
-            SBOM.cyclonedx.json
-            SBOM_SHA256SUMS.txt
-            SBOM_MANIFEST.txt
-            SOURCE_SHA256SUMS.txt
-            DEPENDENCY_INVENTORY.txt
-          )
-          for asset in "${assets[@]}"; do
-            gh release delete-asset "$RELEASE_TAG" "$asset" -y >/dev/null 2>&1 || true
-          done
-          gh release upload "$RELEASE_TAG" "${assets[@]}"
-
-      - name: Supply-chain summary
-        shell: bash
-        run: |
-          {
-            echo "## DPN release supply-chain inventory"
-            echo ""
-            echo "- Release: `${{ steps.release.outputs.tag }}`"
-            echo "- SPDX JSON SBOM: generated"
-            echo "- CycloneDX JSON SBOM: generated"
-            echo "- GitHub dependency snapshot: skipped unless dependency graph is enabled"
-            echo "- Tracked-source SHA-256 manifest: generated"
-            echo "- Declared dependency inventory: generated"
-          } >> "$GITHUB_STEP_SUMMARY"
+            PROVENANCE.json
+            SUPPLY_CHAIN_SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 30
