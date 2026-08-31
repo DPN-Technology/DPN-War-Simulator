@@ -89,6 +89,11 @@ jobs:
             exit 1
           fi
 
+      - name: Generate release SBOM and source manifest
+        env:
+          DPN_VERSION: ${{ env.VERSION }}
+        run: python .github/scripts/generate_supply_chain.py
+
       - name: Build source archive and checksums
         shell: bash
         run: |
@@ -117,6 +122,9 @@ jobs:
             "$archive"
             "SHA256SUMS.txt"
             "RELEASE_MANIFEST.txt"
+            "SBOM.spdx.json"
+            "SOURCE_SHA256SUMS.txt"
+            "DEPENDENCY_INVENTORY.txt"
           )
           if [ "$PRERELEASE" = "true" ]; then
             args+=(--prerelease)
@@ -131,6 +139,9 @@ jobs:
             echo ""
             echo "- Version: `$VERSION`"
             echo "- Commit: `$GITHUB_SHA`"
-            echo "- Source archive and SHA-256 checksums attached"
+            echo "- Source archive and release SHA-256 checksum attached"
+            echo "- SPDX SBOM attached"
+            echo "- Full tracked-source SHA-256 manifest attached"
+            echo "- Declared dependency inventory attached"
             echo "- Generated release notes enabled"
           } >> "$GITHUB_STEP_SUMMARY"
