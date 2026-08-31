@@ -30,20 +30,36 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: Install simulation and asset-pipeline dependencies
+      - name: Install simulation test dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install pytest
           python -m pip install -r requirements.txt
-          python -m pip install -r requirements_asset_pipeline.txt
 
       - name: Compile Python sources
-        run: |
-          python -m compileall -q warsim tests main.py WarSimulator.pyw
-          python -m py_compile tools_build_enterprise_v27.py render_enterprise_preview.py render_enterprise_interiors_v27.py
+        run: python -m compileall -q warsim tests main.py WarSimulator.pyw
 
       - name: Run simulation tests
         run: python -m pytest -q tests
+
+  asset-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements_asset_pipeline.txt
+
+      - name: Install asset-pipeline dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements_asset_pipeline.txt
+
+      - name: Compile asset-pipeline scripts
+        run: python -m py_compile tools_build_enterprise_v27.py render_enterprise_preview.py render_enterprise_interiors_v27.py
 
       - name: Smoke test 3D asset dependency stack
         shell: bash
