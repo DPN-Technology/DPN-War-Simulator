@@ -8,13 +8,28 @@
   <img alt="Repository" src="https://img.shields.io/badge/Repository-Private-111827?style=for-the-badge">
   <img alt="Publisher" src="https://img.shields.io/badge/Publisher-DPN%20Technology-6d28d9?style=for-the-badge">
     <a href="https://github.com/directordiesel/DPN-War-Simulator/actions/workflows/ci.yml"><img alt="CI Passing" src="https://img.shields.io/badge/CI-PASSING-16a34a?style=for-the-badge"></a>
+  <a href="https://github.com/directordiesel/DPN-War-Simulator/releases/tag/v2.7"><img alt="Latest Release v2.7" src="https://img.shields.io/badge/Latest%20Release-v2.7-2563eb?style=for-the-badge"></a>
 </p>
 
 > **Release:** v2.7  
 > **Technology:** Python · 3D Asset Pipeline · Unreal Engine 5 C++
 
 ### Quick navigation
-[Overview](#overview) · [Features](#major-capabilities) · [Architecture](#system-architecture) · [Installation](#installation--startup) · [Security](#security) · [Roadmap](ROADMAP.md) · [Documentation](#documentation)
+[Overview](#overview) · [Features](#major-capabilities) · [Architecture](#system-architecture) · [Installation](#installation--startup) · [Security](#security) · [Roadmap](ROADMAP.md) · [Release](#download-current-release) · [Documentation](#documentation)
+
+## Download Current Release
+
+The current verified release is **v2.7**.
+
+| Release Resource | Link |
+| --- | --- |
+| GitHub Release | [DPN War Simulator v2.7](https://github.com/directordiesel/DPN-War-Simulator/releases/tag/v2.7) |
+| Source archive | [`DPN-War-Simulator-v2.7-source.zip`](https://github.com/directordiesel/DPN-War-Simulator/releases/download/v2.7/DPN-War-Simulator-v2.7-source.zip) |
+| SHA-256 checksums | [`SHA256SUMS.txt`](https://github.com/directordiesel/DPN-War-Simulator/releases/download/v2.7/SHA256SUMS.txt) |
+| Release manifest | [`RELEASE_MANIFEST.txt`](https://github.com/directordiesel/DPN-War-Simulator/releases/download/v2.7/RELEASE_MANIFEST.txt) |
+| Stable release branch | [`release/v2.7`](https://github.com/directordiesel/DPN-War-Simulator/tree/release/v2.7) |
+
+> Release artifacts are generated from the verified release commit by the repository's controlled GitHub Actions release pipeline.
 
 ## Overview
 War Simulator is a long-term military simulation project intended to connect first-person service life, naval warfare, air operations, ground combat, logistics, command, and strategic war into one persistent simulation.
