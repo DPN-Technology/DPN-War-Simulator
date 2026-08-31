@@ -1,9 +1,21 @@
-# DPN War Simulator
+<h1 align="center">DPN War Simulator</h1>
 
-**Current repository release:** v2.7  
-**Current focus:** USS Enterprise (CV-6), Midway 1942 reconstruction and Unreal Engine 5 migration  
-**Publisher:** DPN Technology
+<p align="center"><strong>Developed by DPN Technology</strong></p>
 
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/Version-v2.7-7c3aed?style=for-the-badge">
+  <img alt="Status" src="https://img.shields.io/badge/Status-Active%20Development-16a34a?style=for-the-badge">
+  <img alt="Repository" src="https://img.shields.io/badge/Repository-Private-111827?style=for-the-badge">
+  <img alt="Publisher" src="https://img.shields.io/badge/Publisher-DPN%20Technology-6d28d9?style=for-the-badge">
+</p>
+
+> **Release:** v2.7  
+> **Technology:** Python · 3D Asset Pipeline · Unreal Engine 5 C++
+
+### Quick navigation
+[Overview](#overview) · [Features](#major-capabilities) · [Architecture](#system-architecture) · [Installation](#installation--startup) · [Security](#security) · [Roadmap](ROADMAP.md) · [Documentation](#documentation)
+
+## Overview
 War Simulator is a long-term military simulation project intended to connect first-person service life, naval warfare, air operations, ground combat, logistics, command, and strategic war into one persistent simulation.
 
 The project is being built in layers. The current executable fallback client is Python-based, while a parallel Unreal Engine 5 project and modular 3D asset pipeline are being developed to move the simulation toward a modern, seamless first-person 3D environment.
@@ -251,7 +263,26 @@ See:
 - `SPEC_TRACEABILITY.md`
 - `ENTERPRISE_RECONSTRUCTION_V27.md`
 
-## Run & Test
+## System Architecture
+
+```mermaid
+flowchart LR
+  PLAYER[First-Person Player] --> WORLD[Persistent World]
+  WORLD --> SHIP[USS Enterprise / Ship Systems]
+  WORLD --> GROUND[Ground + Combined Arms]
+  WORLD --> AIR[Air Wing + Flight Combat]
+  SHIP --> NAVAL[Naval Combat + Survivability]
+  NAVAL --> TASK[Task Force + Campaign]
+  GROUND --> STRAT[Strategic War]
+  AIR --> STRAT
+  TASK --> STRAT
+  STRAT --> ECON[War Economy + Logistics]
+  SHIP --> UE5[UE5 Modular Ship Pipeline]
+```
+
+The diagram is a high-level map of the current repository architecture. Detailed implementation notes remain in the source and project documentation.
+
+## Installation & Startup
 
 ### Test then run the current client
 ```bat
@@ -338,3 +369,40 @@ War Simulator v2.7 is a hybrid development state:
 3. Unreal Engine 5 source has been scaffolded for the next rendering/physical-world phase.
 4. Historical accuracy work and gameplay abstractions remain explicitly separated.
 5. The project is still under active development and should not be represented as a finished commercial simulator.
+
+
+## Visual Preview
+
+![DPN War Simulator preview](assets3d/Enterprise_CV6_1942_Midway_preview.png)
+
+## Project Status
+
+| Item | Current State |
+| --- | --- |
+| Release | **v2.7** |
+| Development | **Active** |
+| Repository visibility | **Private** |
+| Publisher | **DPN Technology** |
+| Primary stack | Python · 3D Asset Pipeline · Unreal Engine 5 C++ |
+| Roadmap | [View ROADMAP.md](ROADMAP.md) |
+
+## Documentation
+
+- [`PLAYTEST_GUIDE.md`](PLAYTEST_GUIDE.md)
+- [`SPEC_TRACEABILITY.md`](SPEC_TRACEABILITY.md)
+- [`HISTORICAL_SOURCES.md`](HISTORICAL_SOURCES.md)
+- [`ENTERPRISE_RECONSTRUCTION_V27.md`](ENTERPRISE_RECONSTRUCTION_V27.md)
+- [`UE5_SHIP_PIPELINE_V27.md`](UE5_SHIP_PIPELINE_V27.md)
+- [`CHANGELOG.md`](CHANGELOG.md)
+
+## Development Standards
+
+- Keep live credentials, keys, databases, backups, and private operational data out of Git.
+- Update version metadata and documentation together.
+- Add or update regression tests when fixing production defects.
+- Preserve compatibility code until replacement behavior is verified.
+- Document demo/reconstruction behavior separately from production/historical claims.
+
+---
+
+<p align="center"><strong>DPN Technology</strong><br>Developing connected systems, software, operations platforms, and simulation technology.</p>
