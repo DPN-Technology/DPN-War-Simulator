@@ -7,6 +7,7 @@
   <img alt="Status" src="https://img.shields.io/badge/Status-Active%20Development-16a34a?style=for-the-badge">
   <img alt="Repository" src="https://img.shields.io/badge/Repository-Private-111827?style=for-the-badge">
   <img alt="Publisher" src="https://img.shields.io/badge/Publisher-DPN%20Technology-6d28d9?style=for-the-badge">
+  <a href="https://github.com/directordiesel/DPN-War-Simulator/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/directordiesel/DPN-War-Simulator/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 </p>
 
 > **Release:** v2.7  
