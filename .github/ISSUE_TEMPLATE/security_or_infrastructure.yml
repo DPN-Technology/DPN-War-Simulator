@@ -1,0 +1,27 @@
+name: Security or build infrastructure issue
+description: Report a non-sensitive repository, build, or dependency-security issue.
+title: "[Security/Build] "
+body:
+  - type: markdown
+    attributes:
+      value: "Do not put secrets or sensitive exploit details here. Follow SECURITY.md for private reporting."
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Python runtime
+        - Build / PyInstaller
+        - Unreal Engine project
+        - Asset pipeline
+        - Dependency
+        - Repository / CI
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
