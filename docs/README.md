@@ -4,6 +4,7 @@ Use this index as the starting point for War Simulator engineering, performance,
 
 ## Core documentation
 
+- [Project Showcase](../SHOWCASE.md) — concise product presentation and repository guide.
 - [Project README](../README.md) — product overview, capabilities, build/install guidance, and current status.
 - [Architecture](ARCHITECTURE.md) — gameplay framework, first-person input, world streaming, ship/vehicle systems, interactions, AI, and performance principles.
 - [Security Policy](../SECURITY.md) — vulnerability and protected-data guidance.
