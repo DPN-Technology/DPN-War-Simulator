@@ -1,0 +1,80 @@
+name: Supply Chain
+
+on:
+  push:
+    branches: ["supply-chain/**"]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: supply-chain-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  supply-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+
+      - name: Resolve release version
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "release" ]; then
+            version="${{ github.event.release.tag_name }}"
+          elif [[ "$GITHUB_REF_NAME" == supply-chain/* ]]; then
+            version="${GITHUB_REF_NAME#supply-chain/}"
+          else
+            version="${{ github.event.inputs.version }}"
+          fi
+          if [ -z "$version" ]; then
+            echo "::error::Unable to determine release version."
+            exit 1
+          fi
+          echo "DPN_VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Generate SPDX SBOM and verification manifests
+        run: python .github/scripts/generate_supply_chain.py
+
+      - name: Verify target GitHub Release exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release view "$DPN_VERSION" >/dev/null
+
+      - name: Attach supply-chain records to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$DPN_VERSION" \
+            SBOM.spdx.json \
+            SOURCE_SHA256SUMS.txt \
+            DEPENDENCY_INVENTORY.txt \
+            --clobber
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: supply-chain-${{ env.DPN_VERSION }}
+          path: |
+            SBOM.spdx.json
+            SOURCE_SHA256SUMS.txt
+            DEPENDENCY_INVENTORY.txt
+          retention-days: 90
+
+      - name: Summary
+        run: |
+          {
+            echo "## Supply-chain records generated"
+            echo ""
+            echo "- Release: `$DPN_VERSION`"
+            echo "- Commit: `$GITHUB_SHA`"
+            echo "- SPDX SBOM attached"
+            echo "- Source SHA-256 manifest attached"
+            echo "- Declared dependency inventory attached"
+          } >> "$GITHUB_STEP_SUMMARY"
