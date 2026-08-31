@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security reporting
+    url: https://github.com/directordiesel/DPN-War-Simulator/blob/main/SECURITY.md
+    about: Read the private security-reporting policy before submitting sensitive information.
+  - name: Support and reporting guidance
+    url: https://github.com/directordiesel/DPN-War-Simulator/blob/main/SUPPORT.md
+    about: Review DPN Technology support, bug-reporting, and feature-request guidance.
