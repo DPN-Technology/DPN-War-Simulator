@@ -38,4 +38,4 @@ jobs:
         run: python -m compileall -q warsim tests main.py WarSimulator.pyw
 
       - name: Run simulation tests
-        run: pytest -q tests
+        run: python -m pytest -q tests
