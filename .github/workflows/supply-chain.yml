@@ -96,13 +96,24 @@ jobs:
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: gh release view "$RELEASE_TAG" >/dev/null
 
-      - name: Attach supply-chain records to release
+      - name: Replace supply-chain records on release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
-          gh release upload "$RELEASE_TAG"             SBOM.spdx.json             SBOM.cyclonedx.json             SBOM_SHA256SUMS.txt             SBOM_MANIFEST.txt             SOURCE_SHA256SUMS.txt             DEPENDENCY_INVENTORY.txt             --clobber
+          assets=(
+            SBOM.spdx.json
+            SBOM.cyclonedx.json
+            SBOM_SHA256SUMS.txt
+            SBOM_MANIFEST.txt
+            SOURCE_SHA256SUMS.txt
+            DEPENDENCY_INVENTORY.txt
+          )
+          for asset in "${assets[@]}"; do
+            gh release delete-asset "$RELEASE_TAG" "$asset" -y >/dev/null 2>&1 || true
+          done
+          gh release upload "$RELEASE_TAG" "${assets[@]}"
 
       - name: Supply-chain summary
         shell: bash
