@@ -1,0 +1,80 @@
+name: Repository Health
+
+on:
+  schedule:
+    - cron: "17 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Verify required repository standards
+        shell: bash
+        run: |
+          required=(
+            README.md
+            SECURITY.md
+            CONTRIBUTING.md
+            SUPPORT.md
+            PROPRIETARY_NOTICE.md
+            RELEASE_PROCESS.md
+            ROADMAP.md
+            CHANGELOG.md
+            .github/CODEOWNERS
+            .github/dependabot.yml
+            .github/workflows/ci.yml
+            .github/PULL_REQUEST_TEMPLATE.md
+            .github/ISSUE_TEMPLATE/bug_report.yml
+            .github/ISSUE_TEMPLATE/feature_request.yml
+            .github/ISSUE_TEMPLATE/security_or_infrastructure.yml
+            .github/ISSUE_TEMPLATE/config.yml
+          )
+          failed=0
+          for file in "${required[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "::error::Missing required repository standard: $file"
+              failed=1
+            fi
+          done
+          exit "$failed"
+
+      - name: Reject tracked runtime secrets and private state
+        shell: bash
+        run: |
+          sensitive="$(git ls-files | grep -Ei '(^|/)\.env$|(^|/)(vault|master)[^/]*\.key$|(^|/)FIRST_RUN_LOGIN\.txt$|(^|/)data/.*\.(sqlite|sqlite3|db|enc)$|(^|/)backups/|(^|/)runtime_logs/|(^|/)install_logs/' || true)"
+          if [ -n "$sensitive" ]; then
+            echo "::error::Sensitive/runtime files are tracked:"
+            echo "$sensitive"
+            exit 1
+          fi
+
+      - name: Detect unresolved merge conflicts
+        shell: bash
+        run: |
+          conflicts="$(git grep -n -E '^(<<<<<<< |>>>>>>> )' -- ':!*.md' || true)"
+          if [ -n "$conflicts" ]; then
+            echo "::error::Possible unresolved merge-conflict markers detected:"
+            echo "$conflicts"
+            exit 1
+          fi
+
+      - name: Flag Git-hostile files over 95 MB
+        shell: bash
+        run: |
+          failed=0
+          while IFS= read -r -d '' file; do
+            size="$(stat -c%s "$file")"
+            if [ "$size" -gt 99614720 ]; then
+              echo "::error file=$file::Tracked file exceeds 95 MB ($size bytes). Use an approved release artifact or Git LFS strategy."
+              failed=1
+            fi
+          done < <(git ls-files -z)
+          exit "$failed"
