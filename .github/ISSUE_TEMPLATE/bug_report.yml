@@ -1,0 +1,48 @@
+name: Bug report
+description: Report a reproducible War Simulator defect or regression.
+title: "[Bug] "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - First-person / movement
+        - USS Enterprise / shipboard
+        - Ship physics
+        - Naval combat / survivability
+        - Air wing / flight
+        - Ground / combined arms
+        - Strategic war
+        - Economy / logistics
+        - Persistence / save migration
+        - 3D assets
+        - Unreal Engine project
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "v2.7"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
