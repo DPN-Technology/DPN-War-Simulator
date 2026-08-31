@@ -1,0 +1,123 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version/tag (example: v1.2.3)"
+        required: true
+        type: string
+      prerelease:
+        description: "Mark as prerelease"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.event.inputs.version }}
+      ARTIFACT_BASENAME: DPN-War-Simulator
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Validate release version format
+        shell: bash
+        run: |
+          if [[ ! "$VERSION" =~ ^v[0-9]+([.][0-9]+){1,2}([-.][A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::Version must look like v1.2, v1.2.3, or a documented prerelease variant."
+            exit 1
+          fi
+
+      - name: Verify repository version matches requested release
+        shell: bash
+        run: |
+          grep -Fq "$VERSION" README.md
+
+      - name: Reject tracked runtime secrets and private state
+        shell: bash
+        run: |
+          sensitive="$(git ls-files | grep -Ei '(^|/)\.env$|(^|/)(vault|master)[^/]*\.key$|(^|/)FIRST_RUN_LOGIN\.txt$|(^|/)data/.*\.(sqlite|sqlite3|db|enc)$|(^|/)backups/|(^|/)runtime_logs/|(^|/)install_logs/|(^|/)workspace/generated/|(^|/)workspace/uploads/' || true)"
+          test -z "$sensitive" || { echo "::error::Sensitive/runtime files are tracked:"; echo "$sensitive"; exit 1; }
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install test tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+
+      - name: Compile simulation sources
+        run: python -m compileall -q warsim tests main.py WarSimulator.pyw
+
+      - name: Run release tests
+        run: python -m pytest -q tests
+
+      - name: Ensure tag does not already exist
+        shell: bash
+        run: |
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "::error::Tag $VERSION already exists. Existing releases must not be overwritten."
+            exit 1
+          fi
+
+      - name: Build source archive and checksums
+        shell: bash
+        run: |
+          archive="${ARTIFACT_BASENAME}-${VERSION}-source.zip"
+          git archive --format=zip --output "$archive" HEAD
+          sha256sum "$archive" > SHA256SUMS.txt
+          {
+            echo "Repository: ${GITHUB_REPOSITORY}"
+            echo "Version: ${VERSION}"
+            echo "Commit: ${GITHUB_SHA}"
+            echo "Workflow run: ${GITHUB_RUN_ID}"
+            echo "Generated UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          } > RELEASE_MANIFEST.txt
+
+      - name: Create GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ github.event.inputs.prerelease }}
+        run: |
+          archive="${ARTIFACT_BASENAME}-${VERSION}-source.zip"
+          args=(
+            "$VERSION"
+            --target "$GITHUB_SHA"
+            --title "${ARTIFACT_BASENAME} ${VERSION}"
+            --generate-notes
+            "$archive"
+            "SHA256SUMS.txt"
+            "RELEASE_MANIFEST.txt"
+          )
+          if [ "$PRERELEASE" = "true" ]; then
+            args+=(--prerelease)
+          fi
+          gh release create "${args[@]}"
+
+      - name: Release summary
+        shell: bash
+        run: |
+          {
+            echo "## Release published"
+            echo ""
+            echo "- Version: `$VERSION`"
+            echo "- Commit: `$GITHUB_SHA`"
+            echo "- Source archive and SHA-256 checksums attached"
+            echo "- Generated release notes enabled"
+          } >> "$GITHUB_STEP_SUMMARY"
