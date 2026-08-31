@@ -62,7 +62,7 @@ jobs:
           format: spdx-json
           output-file: SBOM.spdx.json
           artifact-name: sbom-spdx
-          dependency-snapshot: true
+          dependency-snapshot: false
           upload-release-assets: false
           syft-version: v1.51.0
 
@@ -113,7 +113,7 @@ jobs:
             echo "- Release: `${{ steps.release.outputs.tag }}`"
             echo "- SPDX JSON SBOM: generated"
             echo "- CycloneDX JSON SBOM: generated"
-            echo "- GitHub dependency snapshot: submitted"
+            echo "- GitHub dependency snapshot: skipped unless dependency graph is enabled"
             echo "- Tracked-source SHA-256 manifest: generated"
             echo "- Declared dependency inventory: generated"
           } >> "$GITHUB_STEP_SUMMARY"
