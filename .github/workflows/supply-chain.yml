@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/supply-chain.yml"
+      - ".github/scripts/generate_supply_chain.py"
   release:
     types: [published]
   workflow_dispatch:
@@ -13,8 +14,12 @@ permissions:
   actions: read
   contents: write
 
+concurrency:
+  group: supply-chain-${{ github.repository }}
+  cancel-in-progress: false
+
 jobs:
-  sbom:
+  inventory:
     runs-on: ubuntu-latest
     steps:
       - name: Resolve release tag
@@ -22,28 +27,40 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_EVENT_TAG: ${{ github.event.release.tag_name }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
         run: |
-          if [ "$GITHUB_EVENT_NAME" = "release" ] && [ -n "$RELEASE_EVENT_TAG" ]; then
-            tag="$RELEASE_EVENT_TAG"
+          if [ "$GITHUB_EVENT_NAME" = "release" ] && [ -n "$EVENT_TAG" ]; then
+            tag="$EVENT_TAG"
           else
             tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
           fi
           test -n "$tag"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "Using release tag: $tag"
+          echo "DPN_VERSION=$tag" >> "$GITHUB_ENV"
 
       - uses: actions/checkout@v7
         with:
-          ref: ${{ steps.release.outputs.tag }}
           fetch-depth: 0
 
-      - name: Generate SPDX SBOM and dependency snapshot
+      - name: Preserve DPN inventory generator
+        run: cp .github/scripts/generate_supply_chain.py /tmp/dpn_generate_supply_chain.py
+
+      - name: Checkout exact release source
+        shell: bash
+        run: |
+          git fetch --tags --force
+          git checkout --detach "${{ steps.release.outputs.tag }}"
+          echo "Release source commit: $(git rev-parse HEAD)"
+
+      - name: Generate DPN source hashes and dependency inventory
+        run: python /tmp/dpn_generate_supply_chain.py
+
+      - name: Generate SPDX SBOM and submit dependency snapshot
         uses: anchore/sbom-action@v0.24.2
         with:
           path: .
           format: spdx-json
-          output-file: sbom.spdx.json
+          output-file: SBOM.spdx.json
           artifact-name: sbom-spdx
           dependency-snapshot: true
           upload-release-assets: false
@@ -54,16 +71,16 @@ jobs:
         with:
           path: .
           format: cyclonedx-json
-          output-file: sbom.cyclonedx.json
+          output-file: SBOM.cyclonedx.json
           artifact-name: sbom-cyclonedx
           dependency-snapshot: false
           upload-release-assets: false
           syft-version: v1.51.0
 
-      - name: Create SBOM checksums
+      - name: Create SBOM verification manifest
         shell: bash
         run: |
-          sha256sum sbom.spdx.json sbom.cyclonedx.json > SBOM_SHA256SUMS.txt
+          sha256sum SBOM.spdx.json SBOM.cyclonedx.json > SBOM_SHA256SUMS.txt
           {
             echo "Repository: $GITHUB_REPOSITORY"
             echo "Release tag: ${{ steps.release.outputs.tag }}"
@@ -72,23 +89,31 @@ jobs:
             echo "Generated UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           } > SBOM_MANIFEST.txt
 
-      - name: Attach SBOMs to GitHub Release
+      - name: Verify target release exists
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: gh release view "$RELEASE_TAG" >/dev/null
+
+      - name: Attach supply-chain records to release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
-          gh release upload "$RELEASE_TAG"             sbom.spdx.json             sbom.cyclonedx.json             SBOM_SHA256SUMS.txt             SBOM_MANIFEST.txt             --clobber
+          gh release upload "$RELEASE_TAG"             SBOM.spdx.json             SBOM.cyclonedx.json             SBOM_SHA256SUMS.txt             SBOM_MANIFEST.txt             SOURCE_SHA256SUMS.txt             DEPENDENCY_INVENTORY.txt             --clobber
 
       - name: Supply-chain summary
         shell: bash
         run: |
           {
-            echo "## Supply-chain inventory"
+            echo "## DPN release supply-chain inventory"
             echo ""
             echo "- Release: `${{ steps.release.outputs.tag }}`"
-            echo "- SPDX JSON SBOM generated"
-            echo "- CycloneDX JSON SBOM generated"
-            echo "- GitHub dependency snapshot submitted"
-            echo "- SHA-256 checksums attached to the release"
+            echo "- SPDX JSON SBOM: generated"
+            echo "- CycloneDX JSON SBOM: generated"
+            echo "- GitHub dependency snapshot: submitted"
+            echo "- Tracked-source SHA-256 manifest: generated"
+            echo "- Declared dependency inventory: generated"
           } >> "$GITHUB_STEP_SUMMARY"
