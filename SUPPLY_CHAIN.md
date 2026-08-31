@@ -15,7 +15,7 @@ Each current release receives:
 - `SOURCE_SHA256SUMS.txt` — SHA-256 hashes for tracked release-source files
 - `DEPENDENCY_INVENTORY.txt` — readable declared-dependency inventory
 
-The SPDX step also submits a dependency snapshot to GitHub's dependency graph.
+GitHub dependency-snapshot submission is intentionally disabled until the repository dependency graph is enabled. The release SBOMs remain the authoritative machine-readable inventory.
 
 ## Scanner Reproducibility
 
