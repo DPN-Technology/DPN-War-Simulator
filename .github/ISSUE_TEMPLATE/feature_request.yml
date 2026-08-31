@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a gameplay, simulation, historical, asset, or UE5 improvement.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed implementation
+    validations:
+      required: true
+  - type: textarea
+    id: systems
+    attributes:
+      label: Affected simulation systems
+  - type: textarea
+    id: historical
+    attributes:
+      label: Historical/reconstruction basis
+      description: Identify sources or clearly state when this is a gameplay/reconstruction abstraction.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
