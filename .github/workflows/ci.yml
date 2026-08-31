@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  python-simulation:
+  simulation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -28,14 +28,50 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+          cache: pip
 
-      - name: Install test tooling
+      - name: Install simulation and asset-pipeline dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install pytest
+          python -m pip install -r requirements.txt
+          python -m pip install -r requirements_asset_pipeline.txt
 
       - name: Compile Python sources
-        run: python -m compileall -q warsim tests main.py WarSimulator.pyw
+        run: |
+          python -m compileall -q warsim tests main.py WarSimulator.pyw
+          python -m py_compile tools_build_enterprise_v27.py render_enterprise_preview.py render_enterprise_interiors_v27.py
 
       - name: Run simulation tests
         run: python -m pytest -q tests
+
+      - name: Smoke test 3D asset dependency stack
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import numpy as np
+          import trimesh
+          from PIL import Image
+          import matplotlib
+          matplotlib.use("Agg")
+          import matplotlib.pyplot as plt
+
+          mesh = trimesh.creation.box(extents=np.array([1.0, 2.0, 3.0]))
+          glb = Path("/tmp/dpn-war-compat.glb")
+          mesh.export(glb)
+          assert glb.exists() and glb.stat().st_size > 100
+
+          png = Path("/tmp/dpn-war-pillow.png")
+          Image.new("RGB", (32, 32), (20, 20, 20)).save(png)
+          assert png.exists() and png.stat().st_size > 50
+
+          plot = Path("/tmp/dpn-war-matplotlib.png")
+          plt.figure()
+          plt.plot([0, 1], [0, 1])
+          plt.savefig(plot)
+          plt.close()
+          assert plot.exists() and plot.stat().st_size > 100
+
+          print("Asset pipeline compatibility smoke passed")
+          PY
