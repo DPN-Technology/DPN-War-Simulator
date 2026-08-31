@@ -6,6 +6,11 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Existing release tag to inventory (example: v1.2.3)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -21,7 +26,6 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
       - name: Resolve release version
         shell: bash
@@ -33,14 +37,21 @@ jobs:
           else
             version="${{ github.event.inputs.version }}"
           fi
-          if [ -z "$version" ]; then
-            echo "::error::Unable to determine release version."
-            exit 1
-          fi
+          test -n "$version" || { echo "::error::Unable to determine release version."; exit 1; }
           echo "DPN_VERSION=$version" >> "$GITHUB_ENV"
 
+      - name: Preserve supply-chain generator
+        run: cp .github/scripts/generate_supply_chain.py /tmp/dpn_generate_supply_chain.py
+
+      - name: Checkout exact release tag
+        shell: bash
+        run: |
+          git fetch --tags --force
+          git checkout --detach "$DPN_VERSION"
+          echo "Release source commit: $(git rev-parse HEAD)"
+
       - name: Generate SPDX SBOM and verification manifests
-        run: python .github/scripts/generate_supply_chain.py
+        run: python /tmp/dpn_generate_supply_chain.py
 
       - name: Verify target GitHub Release exists
         env:
@@ -51,11 +62,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload "$DPN_VERSION" \
-            SBOM.spdx.json \
-            SOURCE_SHA256SUMS.txt \
-            DEPENDENCY_INVENTORY.txt \
-            --clobber
+          gh release upload "$DPN_VERSION" SBOM.spdx.json SOURCE_SHA256SUMS.txt DEPENDENCY_INVENTORY.txt --clobber
 
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
@@ -66,15 +73,3 @@ jobs:
             SOURCE_SHA256SUMS.txt
             DEPENDENCY_INVENTORY.txt
           retention-days: 90
-
-      - name: Summary
-        run: |
-          {
-            echo "## Supply-chain records generated"
-            echo ""
-            echo "- Release: `$DPN_VERSION`"
-            echo "- Commit: `$GITHUB_SHA`"
-            echo "- SPDX SBOM attached"
-            echo "- Source SHA-256 manifest attached"
-            echo "- Declared dependency inventory attached"
-          } >> "$GITHUB_STEP_SUMMARY"
