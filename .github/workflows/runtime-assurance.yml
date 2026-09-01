@@ -1,0 +1,87 @@
+name: Runtime & Recovery Assurance
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/runtime-assurance.yml"
+      - ".github/scripts/runtime_assurance.py"
+      - "warsim/persistence.py"
+      - "warsim/models.py"
+      - "warsim/config.py"
+      - "main.py"
+      - "WarSimulator.pyw"
+      - "tests/**"
+      - "requirements.txt"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/runtime-assurance.yml"
+      - ".github/scripts/runtime_assurance.py"
+      - "warsim/persistence.py"
+      - "warsim/models.py"
+      - "warsim/config.py"
+      - "main.py"
+      - "WarSimulator.pyw"
+      - "tests/**"
+      - "requirements.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-assurance-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  runtime-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install War Simulator runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+          python -m pip install -r requirements.txt
+
+      - name: Validate persistence and assurance sources
+        run: python -m compileall -q .github/scripts/runtime_assurance.py warsim/persistence.py tests/test_persistence_recovery.py main.py
+
+      - name: Run persistence recovery regression tests
+        run: python -m pytest -q tests/test_core.py tests/test_persistence_recovery.py
+
+      - name: Run live startup import, save, corruption, recovery, and restart assurance
+        run: python .github/scripts/runtime_assurance.py
+
+      - name: Reject leaked runtime save state
+        shell: bash
+        run: |
+          leaked="$(git status --porcelain --untracked-files=all | grep -Ei '(^| )(career\.json|career\.json\.bak|\.war_simulator/|WarSimulator/)' || true)"
+          test -z "$leaked" || { echo "::error::Runtime assurance leaked War Simulator career/runtime state"; echo "$leaked"; exit 1; }
+
+      - name: Phase 3 summary
+        run: |
+          {
+            echo "## DPN War Simulator Phase 3 runtime & recovery assurance"
+            echo ""
+            echo "- headless real game startup/import path: passed"
+            echo "- first-run missing-save behavior: passed"
+            echo "- durable atomic career save and reload: passed"
+            echo "- previous verified career recovery copy: passed"
+            echo "- corrupt career data fails closed without mutation: passed"
+            echo "- corrupt recovery copy rejected without live-state mutation: passed"
+            echo "- verified recovery restore and restart: passed"
+            echo "- runtime save leak/debris check: passed"
+          } >> "$GITHUB_STEP_SUMMARY"
