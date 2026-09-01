@@ -4,80 +4,153 @@ on:
   push:
     branches: ["main"]
   pull_request:
+    branches: ["main"]
   schedule:
     - cron: "41 13 * * 1"
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: supply-chain-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  sbom-and-provenance:
+  validate:
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-
+          persist-credentials: false
       - name: Reject tracked runtime secrets and private state
         shell: bash
         run: |
           sensitive="$(git ls-files | grep -Ei '(^|/)\.env$|(^|/)(vault|master)[^/]*\.key$|(^|/)FIRST_RUN_LOGIN\.txt$|(^|/)data/.*\.(sqlite|sqlite3|db|enc)$|(^|/)backups/|(^|/)runtime_logs/|(^|/)install_logs/|(^|/)workspace/generated/|(^|/)workspace/uploads/' || true)"
           test -z "$sensitive" || { echo "::error::Sensitive/runtime files are tracked:"; echo "$sensitive"; exit 1; }
-
-      - name: Generate SPDX SBOM
-        uses: anchore/sbom-action@v0
+      - name: Resolve validation identity
+        run: echo "DPN_VERSION=commit-${GITHUB_SHA}" >> "$GITHUB_ENV"
+      - name: Generate source hashes and dependency inventory
+        run: python .github/scripts/generate_supply_chain.py
+      - name: Generate validation SPDX SBOM
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
         with:
           path: .
           format: spdx-json
           output-file: SBOM.spdx.json
-          upload-artifact: false
-
-      - name: Generate build provenance
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json, os, platform
-          from datetime import datetime, timezone
-
-          doc = {
-              "schema": "dpn-provenance/v1",
-              "repository": os.environ.get("GITHUB_REPOSITORY"),
-              "commit": os.environ.get("GITHUB_SHA"),
-              "ref": os.environ.get("GITHUB_REF"),
-              "ref_name": os.environ.get("GITHUB_REF_NAME"),
-              "event": os.environ.get("GITHUB_EVENT_NAME"),
-              "workflow": os.environ.get("GITHUB_WORKFLOW"),
-              "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
-              "workflow_run_number": os.environ.get("GITHUB_RUN_NUMBER"),
-              "runner_os": os.environ.get("RUNNER_OS"),
-              "runner_arch": os.environ.get("RUNNER_ARCH"),
-              "python": platform.python_version(),
-              "generated_utc": datetime.now(timezone.utc).isoformat(),
-          }
-          with open("PROVENANCE.json", "w", encoding="utf-8") as f:
-              json.dump(doc, f, indent=2, sort_keys=True)
-              f.write("\n")
-          PY
-
-      - name: Generate checksums
-        shell: bash
-        run: sha256sum SBOM.spdx.json PROVENANCE.json > SUPPLY_CHAIN_SHA256SUMS.txt
-
-      - name: Validate generated supply-chain files
-        shell: bash
-        run: |
-          python -m json.tool SBOM.spdx.json >/dev/null
-          python -m json.tool PROVENANCE.json >/dev/null
-          sha256sum -c SUPPLY_CHAIN_SHA256SUMS.txt
-
-      - name: Upload supply-chain evidence
-        uses: actions/upload-artifact@v7
+          artifact-name: validation-sbom-spdx
+          dependency-snapshot: false
+          upload-release-assets: false
+          syft-version: v1.51.0
+      - name: Generate validation CycloneDX SBOM
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: SBOM.cyclonedx.json
+          artifact-name: validation-sbom-cyclonedx
+          dependency-snapshot: false
+          upload-release-assets: false
+          syft-version: v1.51.0
+      - name: Create validation manifest
+        run: printf 'Repository: %s\nValidation identity: %s\nValidation commit: %s\nSyft: v1.51.0\n' "$GITHUB_REPOSITORY" "$DPN_VERSION" "$(git rev-parse HEAD)" > SBOM_MANIFEST.txt
+      - name: Generate provenance and release-record checksums
+        run: python .github/scripts/generate_release_provenance.py
+      - name: Verify release integrity and generated-record secret safety
+        run: python .github/scripts/verify_release_integrity.py
+      - name: Upload Phase 2 validation evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: supply-chain-${{ github.sha }}
           path: |
             SBOM.spdx.json
-            PROVENANCE.json
-            SUPPLY_CHAIN_SHA256SUMS.txt
+            SBOM.cyclonedx.json
+            SBOM_MANIFEST.txt
+            SOURCE_SHA256SUMS.txt
+            DEPENDENCY_INVENTORY.txt
+            RELEASE_PROVENANCE.json
+            RELEASE_SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 30
+
+  inventory:
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Resolve release tag
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "release" ] && [ -n "$EVENT_TAG" ]; then tag="$EVENT_TAG"; else tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"; fi
+          [[ "$tag" =~ ^v[0-9]+([.][0-9]+){0,2}([-.][A-Za-z0-9.-]+)?$ ]] || { echo "::error::Invalid release tag"; exit 1; }
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "DPN_VERSION=$tag" >> "$GITHUB_ENV"
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Preserve release-integrity tooling
+        run: |
+          cp .github/scripts/generate_supply_chain.py /tmp/dpn_generate_supply_chain.py
+          cp .github/scripts/generate_release_provenance.py /tmp/dpn_generate_release_provenance.py
+          cp .github/scripts/verify_release_integrity.py /tmp/dpn_verify_release_integrity.py
+      - name: Checkout exact release source
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          git fetch --tags --force
+          git checkout --detach "$RELEASE_TAG"
+          test "$(git rev-parse HEAD)" = "$(git rev-list -n 1 "$RELEASE_TAG")"
+      - name: Generate source hashes and dependency inventory
+        run: python /tmp/dpn_generate_supply_chain.py
+      - name: Generate SPDX SBOM
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
+        with:
+          path: .
+          format: spdx-json
+          output-file: SBOM.spdx.json
+          artifact-name: sbom-spdx
+          dependency-snapshot: false
+          upload-release-assets: false
+          syft-version: v1.51.0
+      - name: Generate CycloneDX SBOM
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: SBOM.cyclonedx.json
+          artifact-name: sbom-cyclonedx
+          dependency-snapshot: false
+          upload-release-assets: false
+          syft-version: v1.51.0
+      - name: Create SBOM verification manifest
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          sha256sum SBOM.spdx.json SBOM.cyclonedx.json > SBOM_SHA256SUMS.txt
+          printf 'Repository: %s\nRelease tag: %s\nRelease commit: %s\nSyft: v1.51.0\nGenerated UTC: %s\n' "$GITHUB_REPOSITORY" "$RELEASE_TAG" "$(git rev-parse HEAD)" "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" > SBOM_MANIFEST.txt
+      - name: Generate provenance and complete SHA-256 manifest
+        run: python /tmp/dpn_generate_release_provenance.py
+      - name: Verify release integrity
+        run: python /tmp/dpn_verify_release_integrity.py
+      - name: Replace release integrity records
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          assets=(SBOM.spdx.json SBOM.cyclonedx.json SBOM_SHA256SUMS.txt SBOM_MANIFEST.txt SOURCE_SHA256SUMS.txt DEPENDENCY_INVENTORY.txt RELEASE_PROVENANCE.json RELEASE_SHA256SUMS.txt)
+          for asset in "${assets[@]}"; do gh release delete-asset "$RELEASE_TAG" "$asset" -y >/dev/null 2>&1 || true; done
+          gh release upload "$RELEASE_TAG" "${assets[@]}"
