@@ -2,7 +2,9 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
+import warsim.persistence as persistence
 from warsim.config import SAVE_SCHEMA
 from warsim.models import CareerProfile
 from warsim.persistence import (
@@ -54,6 +56,25 @@ class PersistenceRecoveryTests(unittest.TestCase):
             with self.assertRaises(SaveCorruptionError):
                 save_profile(CareerProfile(name="Must Not Save"), path)
             self.assertEqual(recovery.read_bytes(), before)
+
+    def test_failed_post_write_verification_restores_previous_live_save(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "career.json"
+            save_profile(CareerProfile(name="Known Good", xp=111), path)
+            original_atomic_write = persistence._atomic_write
+
+            def corrupt_new_live_save(target, data):
+                original_atomic_write(target, data)
+                if Path(target) == path and b'"Broken Replacement"' in data:
+                    path.write_bytes(b"corrupt-after-atomic-replace")
+
+            with mock.patch("warsim.persistence._atomic_write", side_effect=corrupt_new_live_save):
+                with self.assertRaises(SaveCorruptionError):
+                    save_profile(CareerProfile(name="Broken Replacement", xp=999), path)
+
+            restored = load_profile(path)
+            self.assertEqual(restored.name, "Known Good")
+            self.assertEqual(restored.xp, 111)
 
     def test_verified_recovery_restores_previous_profile(self):
         with tempfile.TemporaryDirectory() as td:
