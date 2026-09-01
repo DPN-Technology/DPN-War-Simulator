@@ -59,7 +59,8 @@ jobs:
           upload-release-assets: false
           syft-version: v1.51.0
       - name: Create validation manifest
-        run: printf 'Repository: %s\nValidation identity: %s\nValidation commit: %s\nSyft: v1.51.0\n' "$GITHUB_REPOSITORY" "$DPN_VERSION" "$(git rev-parse HEAD)" > SBOM_MANIFEST.txt
+        run: |
+          printf 'Repository: %s\nValidation identity: %s\nValidation commit: %s\nSyft: v1.51.0\n' "$GITHUB_REPOSITORY" "$DPN_VERSION" "$(git rev-parse HEAD)" > SBOM_MANIFEST.txt
       - name: Generate provenance and release-record checksums
         run: python .github/scripts/generate_release_provenance.py
       - name: Verify release integrity and generated-record secret safety
