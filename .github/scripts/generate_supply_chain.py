@@ -75,7 +75,7 @@ packages=[{"name":PROJECT,"SPDXID":root,"versionInfo":VERSION,"downloadLocation"
 rels=[{"spdxElementId":"SPDXRef-DOCUMENT","relationshipType":"DESCRIBES","relatedSpdxElement":root}]
 for d in deps:
     key=f'{d["ecosystem"]}:{d["name"]}:{d["requirement"]}:{d["source"]}'
-    sid="SPDXRef-"+hashlib.sha1(key.encode()).hexdigest()[:16]
+    sid="SPDXRef-"+hashlib.sha256(key.encode()).hexdigest()[:16]
     packages.append({"name":d["name"],"SPDXID":sid,"downloadLocation":"NOASSERTION","filesAnalyzed":False,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","copyrightText":"NOASSERTION","packageComment":f'Declared via {d["ecosystem"]}; requirement {d["requirement"]}; source {d["source"]}'})
     rels.append({"spdxElementId":root,"relationshipType":"DEPENDS_ON","relatedSpdxElement":sid})
 now=datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z")
