@@ -130,6 +130,7 @@ def save_profile(profile: CareerProfile, path: Path | None = None) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
     payload = {"schema": SAVE_SCHEMA, "profile": profile.to_dict()}
     encoded = (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode("utf-8")
+    had_verified_previous = False
 
     # Preserve the previous *verified* save before replacing it. A corrupt live
     # save is never copied over the known-good recovery copy.
@@ -138,11 +139,26 @@ def save_profile(profile: CareerProfile, path: Path | None = None) -> Path:
         _profile_from_payload(previous)
         previous_bytes = path.read_bytes()
         _atomic_write(backup_path(path), previous_bytes)
+        had_verified_previous = True
 
     _atomic_write(path, encoded)
     # Read-after-write verification prevents acknowledging an incomplete save.
-    verified = _read_payload(path)
-    _profile_from_payload(verified)
+    # If replacement verification fails after a verified previous save existed,
+    # restore that exact recovery copy before surfacing the failure. This keeps
+    # the live save path usable instead of stranding the application on a corrupt
+    # replacement while still preserving the original verification exception.
+    try:
+        verified = _read_payload(path)
+        _profile_from_payload(verified)
+    except SaveCorruptionError:
+        if had_verified_previous:
+            recovery = backup_path(path)
+            recovery_payload = _read_payload(recovery)
+            _profile_from_payload(recovery_payload)
+            _atomic_write(path, recovery.read_bytes())
+            restored = _read_payload(path)
+            _profile_from_payload(restored)
+        raise
     return path
 
 
