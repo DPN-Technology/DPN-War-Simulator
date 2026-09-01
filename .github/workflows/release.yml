@@ -30,9 +30,10 @@ jobs:
       ARTIFACT_BASENAME: DPN-War-Simulator
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Resolve release request
         shell: bash
@@ -66,7 +67,7 @@ jobs:
           sensitive="$(git ls-files | grep -Ei '(^|/)\.env$|(^|/)(vault|master)[^/]*\.key$|(^|/)FIRST_RUN_LOGIN\.txt$|(^|/)data/.*\.(sqlite|sqlite3|db|enc)$|(^|/)backups/|(^|/)runtime_logs/|(^|/)install_logs/|(^|/)workspace/generated/|(^|/)workspace/uploads/' || true)"
           test -z "$sensitive" || { echo "::error::Sensitive/runtime files are tracked:"; echo "$sensitive"; exit 1; }
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version: "3.11"
 
