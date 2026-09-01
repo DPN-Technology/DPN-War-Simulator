@@ -1,8 +1,10 @@
 # DPN Repository Certification Scorecard
 
 **Repository:** DPN War Simulator  
-**Certification baseline:** DPN GitHub Governance v3  
-**Reviewed:** 2026-09-01
+**Certification baseline:** DPN GitHub Governance v4  
+**Reviewed:** 2026-09-01  
+**Baseline commit:** `5b5ea077c88d4b1484cde17415e7c354981e255f`  
+**Certification:** CONDITIONAL — automated engineering controls healthy; settings enforcement requires external verification.
 
 ## Engineering controls
 
@@ -18,18 +20,22 @@
 | Release automation | PASS |
 | Least-privilege workflow baseline | PASS |
 | Immutable SHA-pinned core Actions | PASS |
-| Branch/ruleset enforcement | MANUAL VERIFICATION REQUIRED |
+| Branch/ruleset enforcement | BLOCKED BY INTEGRATION / PLAN |
 | GitHub code scanning / CodeQL entitlement | MANUAL VERIFICATION REQUIRED |
 | GitHub secret scanning / push protection | MANUAL VERIFICATION REQUIRED |
 
+## Governance v4 certification
+
+The audited v3 baseline CI and security activity completed successfully. No Critical repository-file defect was confirmed. Historical/versioned design material remains intentionally unmoved until inbound links and tooling references can be validated.
+
 ## Certification policy
 
-A repository is release-ready only when required simulation, CI, security, runtime, asset-pipeline, supply-chain, and release-integrity checks pass. Historical design documents should be migrated into structured `docs/` areas only after validating references.
+A repository is release-ready only when required simulation, CI, security, runtime, asset-pipeline, supply-chain, packaging, and release-integrity checks pass.
 
 ## Outstanding governance actions
 
-1. Verify `main` is protected by a ruleset requiring pull requests and required status checks.
-2. Verify force-push and branch deletion protections are enabled.
-3. Enable GitHub secret scanning and push protection where supported.
-4. Enable CodeQL/default setup where supported.
-5. Continue safe migration of historical/versioned root documentation after link/reference validation.
+1. Enforce protected `main` with pull requests and required status checks when account permissions/plan allow it.
+2. Block force pushes and branch deletion except documented emergency bypass.
+3. Verify secret scanning and push protection support.
+4. Verify CodeQL/default setup for supported languages.
+5. Continue safe migration of historical/versioned root documentation only after reference validation.
