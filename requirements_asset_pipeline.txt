@@ -1,6 +1,6 @@
 # Only needed to regenerate the v2.7 Enterprise GLB/OBJ and texture assets.
 # Python 3.12+ is required by the current NumPy floor used by this asset pipeline.
-numpy>=2.5.2,<3
+numpy>=2.5.3,<3
 trimesh>=5.1.0,<6
 Pillow>=12.3.0,<13
 matplotlib>=3.11.1,<4
