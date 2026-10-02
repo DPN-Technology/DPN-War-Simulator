@@ -1,0 +1,92 @@
+name: DPN Advanced Security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "37 10 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: advanced-security-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secret-history:
+    name: Full-history secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Scan repository history
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  codeql:
+    name: CodeQL ${{ matrix.language }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, c-cpp]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.language == 'c-cpp' && 'none' || 'none' }}
+      - name: Analyze locally
+        uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
+        with:
+          upload: never
+          output: codeql-results
+      - name: Enforce high-severity SARIF findings
+        shell: python
+        run: |
+          import json, pathlib, sys
+          failures=[]
+          for p in pathlib.Path("codeql-results").rglob("*.sarif"):
+              data=json.loads(p.read_text(encoding="utf-8"))
+              for run in data.get("runs",[]):
+                  rules={r.get("id"):r for r in run.get("tool",{}).get("driver",{}).get("rules",[])}
+                  for result in run.get("results",[]):
+                      rule=rules.get(result.get("ruleId"),{})
+                      props=rule.get("properties",{})
+                      score=props.get("security-severity")
+                      try: severe=score is not None and float(score)>=7.0
+                      except (TypeError,ValueError): severe=False
+                      if result.get("level")=="error" or severe:
+                          failures.append((result.get("ruleId","unknown"),score,result.get("level","")))
+          if failures:
+              for item in failures: print("Blocking CodeQL finding:",*item)
+              sys.exit(1)
+          print("No blocking CodeQL findings.")
+      - name: Preserve CodeQL SARIF
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: war-simulator-codeql-${{ matrix.language }}
+          path: codeql-results
+          retention-days: 30
+          if-no-files-found: error
