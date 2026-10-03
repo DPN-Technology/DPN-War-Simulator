@@ -70,6 +70,11 @@ class WarSimulatorApp(tk.Tk):
         s.configure("TFrame", background=COLORS["bg"])
         s.configure("Panel.TFrame", background=COLORS["panel"])
         s.configure("Panel2.TFrame", background=COLORS["panel2"])
+        # DPN VISUAL FABRIC PHASE 3 — WAR / TACTICAL INTERACTION
+        s.map("TButton", background=[("active", COLORS["panel2"]), ("pressed", COLORS["panel"])], foreground=[("active", COLORS["text"])])
+        s.map("Treeview", background=[("selected", COLORS["panel2"])], foreground=[("selected", COLORS["text"])])
+        s.configure("TNotebook.Tab", padding=(12, 8))
+        s.map("TNotebook.Tab", background=[("selected", COLORS["panel2"]), ("active", COLORS["panel"])], foreground=[("selected", COLORS["accent"]), ("active", COLORS["text"])])
         s.configure("TLabel", background=COLORS["bg"], foreground=COLORS["text"])
         s.configure("Panel.TLabel", background=COLORS["panel"], foreground=COLORS["text"])
         s.configure("Muted.TLabel", background=COLORS["panel"], foreground=COLORS["muted"])
