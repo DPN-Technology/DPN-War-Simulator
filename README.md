@@ -23,6 +23,62 @@
 </p>
 <!-- DPN-REPO-SHOWCASE:END -->
 
+<!-- DPN-REPO-DETAILS:START -->
+
+## Product Architecture
+
+```mermaid
+flowchart LR
+  P[Player / Career] --> U[Desktop / UE5 Presentation]
+  U --> S[Simulation Systems]
+  S --> C[Combat / Ships / Vehicles]
+  S --> W[World / AI / Crew]
+  S --> D[(Career & Scenario Data)]
+  A[3D Asset Pipeline] --> U
+```
+
+## Feature Matrix
+
+| Area | What this repository covers |
+| --- | --- |
+| **Simulation** | First-person, shipboard and large-scale war systems |
+| **Naval / Vehicle** | Ship physics, survivability, air and ground operations |
+| **Career** | Academy, crew, service record and historical progression |
+| **Content Pipeline** | 3D assets, UE5 migration and historical references |
+
+## Visual Evidence
+
+<table>
+<tr>
+<td align="center"><img src="assets3d/Enterprise_CV6_1942_Midway_preview.png" alt="USS Enterprise preview" width="100%"><br><sub>USS Enterprise preview</sub></td>
+<td align="center"><img src="assets3d/Enterprise_CV6_1942_InteriorModules_preview.png" alt="Interior modules preview" width="100%"><br><sub>Interior modules preview</sub></td>
+<td align="center"><img src="assets3d/Enterprise_CV6_1942_Midway_top.png" alt="Top profile" width="100%"><br><sub>Top profile</sub></td>
+</tr>
+</table>
+
+> Visuals above are repository-native assets or verified project captures already committed within the DPN organization. No synthetic runtime screenshot is presented as a real capture.
+
+## Install & Run
+
+| | |
+| --- | --- |
+| **Primary target** | Windows / UE5 |
+| **Fast path** | Use `RUN_GAME.bat` for the current launcher or `OPEN_UE5_PROJECT.bat` for Unreal development. |
+| **Setup reference** | [Open setup documentation](START_HERE.txt) |
+
+## Security, Architecture & Release
+
+| Resource | Purpose |
+| --- | --- |
+| [Security policy](SECURITY.md) | Vulnerability reporting, protected-data guidance and security expectations |
+| [Architecture](docs/ARCHITECTURE.md) | System boundaries, major components and engineering model |
+| [Release process](RELEASE_PROCESS.md) | How versioned releases are prepared and validated |
+| [GitHub Releases](https://github.com/DPN-Technology/DPN-War-Simulator/releases) | Published versions and downloadable release artifacts |
+
+> **Repository presentation rule:** status, release and security claims in this README should stay tied to repository evidence. Visual polish must not imply a capability is production-ready when the underlying project documentation says otherwise.
+
+<!-- DPN-REPO-DETAILS:END -->
+
 <p align="center"><img src="assets/dpn-war-simulator-brand.jpg" alt="DPN War Simulator" width="720"></p>
 <h1 align="center">DPN War Simulator</h1>
 <p align="center"><strong>Developed by DPN Technology</strong></p>
