@@ -11,6 +11,18 @@
 
 <!-- DPN-REPO-HERO:END -->
 
+<!-- DPN-REPO-SHOWCASE:START -->
+<p align="center"><img src=".github/repo-showcase.svg" alt="DPN War Simulator capabilities" width="100%"></p>
+
+<p align="center">
+  <a href="https://github.com/DPN-Technology/DPN-War-Simulator/releases"><strong>Releases</strong></a>
+  &nbsp;•&nbsp;
+  <a href="https://github.com/DPN-Technology/DPN-War-Simulator/issues"><strong>Issues</strong></a>
+  &nbsp;•&nbsp;
+  <a href="https://github.com/DPN-Technology/DPN-War-Simulator/pulls"><strong>Pull Requests</strong></a>
+</p>
+<!-- DPN-REPO-SHOWCASE:END -->
+
 <p align="center"><img src="assets/dpn-war-simulator-brand.jpg" alt="DPN War Simulator" width="720"></p>
 <h1 align="center">DPN War Simulator</h1>
 <p align="center"><strong>Developed by DPN Technology</strong></p>
