@@ -145,6 +145,12 @@ class WarSimulatorApp(tk.Tk):
         self.header_title.grid(row=0, column=0, sticky="w")
         self.header_status = ttk.Label(self.header, text="", foreground=COLORS["muted"])
         self.header_status.grid(row=0, column=1, sticky="e")
+        fabric = ttk.Frame(self.header, style="Panel2.TFrame", padding=(10, 6))
+        fabric.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(8, 0))
+        ttk.Label(fabric, text="TACTICAL FABRIC", background=COLORS["panel2"], foreground=COLORS["accent"], font=("Segoe UI Semibold", 8)).pack(side="left", padx=(0, 14))
+        for key, value in (("COMMAND", "READY"), ("SIM CORE", "LIVE"), ("SHIP SYSTEMS", "LINKED"), ("CAREER DATA", "SECURE")):
+            ttk.Label(fabric, text=key, background=COLORS["panel2"], foreground=COLORS["muted"], font=("Consolas", 8)).pack(side="left", padx=(0, 4))
+            ttk.Label(fabric, text=value, background=COLORS["panel2"], foreground=COLORS.get("radar", COLORS["good"]), font=("Consolas", 8, "bold")).pack(side="left", padx=(0, 12))
         self.body = ttk.Frame(self.content)
         self.body.grid(row=1, column=0, sticky="nsew", padx=28, pady=(0, 28))
         self.body.columnconfigure(0, weight=1)
