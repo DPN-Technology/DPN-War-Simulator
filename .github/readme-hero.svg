@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+<title id="title">DPN War Simulator</title><desc id="desc">Shipboard • Tactical • Historical Simulation</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#050507"/><stop offset=".55" stop-color="#0A0A0E"/><stop offset="1" stop-color="#12060A"/></linearGradient>
+  <radialGradient id="glow" cx=".72" cy=".38" r=".65"><stop stop-color="#FF5A36" stop-opacity=".22"/><stop offset="1" stop-color="#FF5A36" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#ffffff" stroke-opacity=".035"/></pattern>
+  <filter id="soft"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+<rect width="1200" height="320" rx="24" fill="url(#bg)"/>
+<rect width="1200" height="320" rx="24" fill="url(#grid)"/>
+<rect width="1200" height="320" rx="24" fill="url(#glow)"/>
+<g opacity=".18" font-family="Consolas,monospace" font-size="15" fill="#FF5A36">
+  <text x="770" y="42">01000100 01010000 01001110</text><text x="825" y="70">00110101 00110010 00110110</text>
+  <text x="735" y="258">01000100 01000101 01010110</text><text x="850" y="286">01001110 01000001 01010110</text>
+</g>
+<g stroke="#FF5A36" stroke-opacity=".30" fill="none">
+  <circle cx="1005" cy="160" r="92"/><circle cx="1005" cy="160" r="58" stroke-dasharray="5 8"/><circle cx="1005" cy="160" r="26"/>
+  <path d="M913 160h184M1005 68v184"/><path d="M1005 160l76-46" stroke-width="2"/>
+</g>
+<circle cx="1081" cy="114" r="5" fill="#FF5A36"/>
+<rect x="72" y="57" width="44" height="4" rx="2" fill="#FF5A36"/>
+<text x="72" y="98" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#FF5A36" letter-spacing="4">DPN TECHNOLOGY</text>
+<text x="72" y="160" font-family="Segoe UI,Arial,sans-serif" font-size="44" font-weight="800" fill="#F6F6F8">DPN War Simulator</text>
+<text x="72" y="202" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="500" fill="#9A9AA5">Shipboard • Tactical • Historical Simulation</text>
+<text x="72" y="260" font-family="Consolas,monospace" font-size="13" font-weight="700" fill="#6F6F78" letter-spacing="2">DEVELOP  •  PIONEER  •  NAVIGATE</text>
+<rect x="1" y="1" width="1198" height="318" rx="23" fill="none" stroke="#FF5A36" stroke-opacity=".28"/>
+</svg>
