@@ -1,3 +1,16 @@
+<!-- DPN-REPO-HERO:START -->
+<p align="center">
+  <img src=".github/readme-hero.svg" alt="DPN War Simulator" width="100%">
+</p>
+
+<p align="center">
+  <img alt="DPN Technology" src="https://img.shields.io/badge/DPN-Technology-111111?style=flat-square&logo=github">
+  <img alt="Development" src="https://img.shields.io/badge/Development-Active-FF5A36?style=flat-square">
+  <img alt="Organization" src="https://img.shields.io/badge/Organization-DPN--Technology-FF5A36?style=flat-square">
+</p>
+
+<!-- DPN-REPO-HERO:END -->
+
 <p align="center"><img src="assets/dpn-war-simulator-brand.jpg" alt="DPN War Simulator" width="720"></p>
 <h1 align="center">DPN War Simulator</h1>
 <p align="center"><strong>Developed by DPN Technology</strong></p>
@@ -7,7 +20,7 @@
   <img alt="Status" src="https://img.shields.io/badge/Status-Active%20Development-16a34a?style=for-the-badge">
   <img alt="Repository" src="https://img.shields.io/badge/Repository-Private-111827?style=for-the-badge">
   <img alt="Publisher" src="https://img.shields.io/badge/Publisher-DPN%20Technology-6d28d9?style=for-the-badge">
-  <a href="https://github.com/directordiesel/DPN-War-Simulator/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/badge/CI-Automated-2563eb?style=for-the-badge"></a>
+  <a href="https://github.com/DPN-Technology/DPN-War-Simulator/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/badge/CI-Automated-2563eb?style=for-the-badge"></a>
 </p>
 
 > **Release:** v2.7  
