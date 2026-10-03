@@ -156,6 +156,15 @@ class WarSimulatorApp(tk.Tk):
         for key, value in (("COMMAND", "READY"), ("SIM CORE", "LIVE"), ("SHIP SYSTEMS", "LINKED"), ("CAREER DATA", "SECURE")):
             ttk.Label(fabric, text=key, background=COLORS["panel2"], foreground=COLORS["muted"], font=("Consolas", 8)).pack(side="left", padx=(0, 4))
             ttk.Label(fabric, text=value, background=COLORS["panel2"], foreground=COLORS.get("radar", COLORS["good"]), font=("Consolas", 8, "bold")).pack(side="left", padx=(0, 12))
+        # DPN VISUAL FABRIC PHASE 4 — WAR / FLAGSHIP TACTICAL COMMAND
+        command = ttk.Frame(self.header, style="Panel.TFrame", padding=(12, 8))
+        command.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(7, 0))
+        ttk.Label(command, text="TACTICAL COMMAND LOOP", background=COLORS["panel"], foreground=COLORS["accent"], font=("Segoe UI Semibold", 9)).pack(side="left", padx=(0, 14))
+        for step in ("DETECT", "IDENTIFY", "DECIDE", "ACT", "ASSESS"):
+            ttk.Label(command, text=step, background=COLORS["panel"], foreground=COLORS["text"], font=("Consolas", 8, "bold")).pack(side="left", padx=(0, 5))
+            if step != "ASSESS":
+                ttk.Label(command, text="›", background=COLORS["panel"], foreground=COLORS.get("radar", COLORS["good"]), font=("Consolas", 10)).pack(side="left", padx=(0, 5))
+        ttk.Label(command, text="SHIPBOARD / CAREER / HISTORICAL SIMULATION", background=COLORS["panel"], foreground=COLORS["muted"], font=("Consolas", 8)).pack(side="right")
         self.body = ttk.Frame(self.content)
         self.body.grid(row=1, column=0, sticky="nsew", padx=28, pady=(0, 28))
         self.body.columnconfigure(0, weight=1)
