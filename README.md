@@ -11,6 +11,15 @@
 
 <!-- DPN-REPO-HERO:END -->
 
+<!-- DPN-LIVE-STATUS:START -->
+<p align="center">
+  <img alt="Latest release" src="https://img.shields.io/github/v/release/DPN-Technology/DPN-War-Simulator?display_name=tag&sort=semver&style=flat-square&label=release">
+  <img alt="Last commit" src="https://img.shields.io/github/last-commit/DPN-Technology/DPN-War-Simulator?style=flat-square&label=last%20commit">
+  <img alt="Open issues" src="https://img.shields.io/github/issues/DPN-Technology/DPN-War-Simulator?style=flat-square">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/DPN-Technology/DPN-War-Simulator?style=flat-square">
+</p>
+<!-- DPN-LIVE-STATUS:END -->
+
 <!-- DPN-REPO-SHOWCASE:START -->
 <p align="center"><img src=".github/repo-showcase.svg" alt="DPN War Simulator capabilities" width="100%"></p>
 
@@ -78,6 +87,28 @@ flowchart LR
 > **Repository presentation rule:** status, release and security claims in this README should stay tied to repository evidence. Visual polish must not imply a capability is production-ready when the underlying project documentation says otherwise.
 
 <!-- DPN-REPO-DETAILS:END -->
+
+<!-- DPN-ECOSYSTEM:START -->
+
+## DPN Ecosystem
+
+**Category:** Simulation & Interactive
+
+[**DPN Tool Die Simulator**](https://github.com/DPN-Technology/DPN-Tool-Die-Simulator) · [**MemeSpace**](https://github.com/DPN-Technology/MemeSpace) · [**DPN Website**](https://github.com/DPN-Technology/DPN-Website)
+
+<details>
+<summary><strong>Explore the broader DPN Technology platform</strong></summary>
+
+| Control & Infrastructure | Business Operations | Development & AI | Simulation & Interactive |
+| --- | --- | --- | --- |
+| [DPN Operational Control](https://github.com/DPN-Technology/DPN-Operational-Control) | [DPN One](https://github.com/DPN-Technology/DPN-One) | [DPN AI](https://github.com/DPN-Technology/DPN-AI) | [DPN War Simulator](https://github.com/DPN-Technology/DPN-War-Simulator) |
+| [DPN Executive Control System](https://github.com/DPN-Technology/DPN-Executive-Control-System) | [DPN Human Resources](https://github.com/DPN-Technology/DPN-Human-Resources-Software) | [Death the Developer](https://github.com/DPN-Technology/DPN-Death-the-Developer) | [Tool & Die Simulator](https://github.com/DPN-Technology/DPN-Tool-Die-Simulator) |
+| [DPN WatchTower](https://github.com/DPN-Technology/DPN-Watch-Tower) | [DPN Workforce](https://github.com/DPN-Technology/DPN-Workforce-Time-Management-System) | [DPN Website](https://github.com/DPN-Technology/DPN-Website) | [MemeSpace](https://github.com/DPN-Technology/MemeSpace) |
+| [DPN Network Mapper](https://github.com/DPN-Technology/DPN-Network-Mapper) | [DPN Service Desk](https://github.com/DPN-Technology/DPN-Service-Desk) | [DPN FiveM Resources](https://github.com/DPN-Technology/DPN-QB-FiveM-Scripts) | [DPN Aqua Labs](https://github.com/DPN-Technology/DPN-Aqua-Labs-Point-of-Sale-System) |
+
+</details>
+
+<!-- DPN-ECOSYSTEM:END -->
 
 <p align="center"><img src="assets/dpn-war-simulator-brand.jpg" alt="DPN War Simulator" width="720"></p>
 <h1 align="center">DPN War Simulator</h1>
