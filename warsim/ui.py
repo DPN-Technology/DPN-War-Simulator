@@ -83,11 +83,11 @@ class WarSimulatorApp(tk.Tk):
         s.map("Accent.TButton", background=[("active", COLORS["accent"])])
         s.configure("Nav.TButton", background=COLORS["panel"], foreground=COLORS["muted"], borderwidth=0, padding=(16, 12), anchor="w")
         s.map("Nav.TButton", background=[("active", COLORS["panel2"])], foreground=[("active", COLORS["text"])])
-        s.configure("TButton", background=COLORS["panel2"], foreground=COLORS["text"], borderwidth=0, padding=8)
+        s.configure("TButton", background=COLORS["panel2"], foreground=COLORS["text"], borderwidth=1, relief="flat", padding=(10, 8))
         s.map("TButton", background=[("active", COLORS["line"])])
         s.configure("TCombobox", fieldbackground=COLORS["panel2"], background=COLORS["panel2"], foreground=COLORS["text"])
         s.configure("Horizontal.TProgressbar", troughcolor=COLORS["line"], background=COLORS["accent2"], bordercolor=COLORS["line"])
-        s.configure("Treeview", background=COLORS["panel2"], fieldbackground=COLORS["panel2"], foreground=COLORS["text"], rowheight=28)
+        s.configure("Treeview", background=COLORS["panel2"], fieldbackground=COLORS["panel2"], foreground=COLORS["text"], rowheight=30, borderwidth=0)
         s.configure("Treeview.Heading", background=COLORS["line"], foreground=COLORS["text"])
 
     def _build_shell(self):
@@ -101,6 +101,14 @@ class WarSimulatorApp(tk.Tk):
         logo = tk.Canvas(nav, width=190, height=90, bg=COLORS["panel"], highlightthickness=0)
         logo.grid(row=0, column=0, padx=20, pady=(24, 14))
         logo.create_polygon(20, 45, 50, 15, 140, 15, 170, 45, 140, 75, 50, 75, fill=COLORS["panel2"], outline=COLORS["accent"], width=2)
+        # DPN Visual Fabric v1 — compact command/radar signature.
+        radar = COLORS.get("radar", COLORS["good"])
+        for radius in (22, 34, 46):
+            logo.create_oval(95-radius, 45-radius, 95+radius, 45+radius, outline=COLORS["grid"], width=1)
+        logo.create_line(45,45,145,45,fill=COLORS["grid"])
+        logo.create_line(95,8,95,82,fill=COLORS["grid"])
+        logo.create_line(95,45,132,23,fill=radar,width=2)
+        logo.create_oval(128,19,136,27,fill=radar,outline="")
         logo.create_text(95, 41, text="WAR", fill=COLORS["text"], font=("Segoe UI Semibold", 20))
         logo.create_text(95, 64, text="SIMULATOR", fill=COLORS["accent"], font=("Segoe UI Semibold", 10))
 
