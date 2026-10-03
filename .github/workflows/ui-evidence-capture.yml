@@ -1,0 +1,48 @@
+name: UI Evidence Capture
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_results:
+        description: Commit generated runtime evidence back to the repository
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install native capture dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb imagemagick python3-tk
+      - name: Prepare isolated simulation profile
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/war-sim-home"
+          echo "HOME=$RUNNER_TEMP/war-sim-home" >> "$GITHUB_ENV"
+      - name: Capture real War Simulator evidence
+        env:
+          CAPTURE_VIEWPORT: 1600x1000
+          PYTHONPATH: .
+        run: |
+          xvfb-run -a --server-args="-screen 0 1600x1000x24" /usr/bin/python3 tools/capture_ui_evidence.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: war-simulator-runtime-evidence
+          path: docs/evidence/runtime/
+      - name: Commit evidence
+        if: ${{ inputs.commit_results }}
+        run: |
+          git config user.name "DPN Evidence Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/evidence/runtime/
+          git diff --cached --quiet && exit 0
+          git commit -m "evidence: refresh War Simulator runtime captures"
+          git push
