@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Install native capture dependencies
         run: |
           sudo apt-get update
@@ -33,7 +33,7 @@ jobs:
           PYTHONPATH: .
         run: |
           xvfb-run -a --server-args="-screen 0 1600x1000x24" /usr/bin/python3 tools/capture_ui_evidence.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: war-simulator-runtime-evidence
           path: docs/evidence/runtime/
