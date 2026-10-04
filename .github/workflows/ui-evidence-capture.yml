@@ -17,7 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Install native capture dependencies
         run: |
           sudo apt-get update
@@ -33,16 +35,18 @@ jobs:
           PYTHONPATH: .
         run: |
           xvfb-run -a --server-args="-screen 0 1600x1000x24" /usr/bin/python3 tools/capture_ui_evidence.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: war-simulator-runtime-evidence
           path: docs/evidence/runtime/
       - name: Commit evidence
         if: ${{ inputs.commit_results }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "DPN Evidence Bot"
           git config user.email "actions@users.noreply.github.com"
           git add docs/evidence/runtime/
           git diff --cached --quiet && exit 0
           git commit -m "evidence: refresh War Simulator runtime captures"
-          git push
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF_NAME}"
