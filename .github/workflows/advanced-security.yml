@@ -43,7 +43,7 @@ jobs:
           tar -xzf "${archive}" -C /tmp gitleaks
           sudo install -m 0755 /tmp/gitleaks /usr/local/bin/gitleaks
           gitleaks version
-      - name: Scan repository history for secrets
+      - name: Scan repository history
         shell: bash
         run: gitleaks git --no-banner --redact --log-opts="--all" .
 
@@ -54,7 +54,6 @@ jobs:
     permissions:
       contents: read
       actions: read
-      security-events: write
     strategy:
       fail-fast: false
       matrix:
@@ -72,8 +71,7 @@ jobs:
       - name: Analyze locally
         uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
         with:
-          upload: always
-          upload-database: false
+          upload: never
           output: codeql-results
       - name: Enforce high-severity SARIF findings
         shell: python
